@@ -1,0 +1,1076 @@
+{
+  "address": "0xe0285d1a76B61DD8c40947b8BcA708aC5657e7EA",
+  "abi": [
+    {
+      "inputs": [],
+      "name": "ReentrancyGuardReentrantCall",
+      "type": "error"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "uint256",
+          "name": "projectId",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "milestoneIndex",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "freelancerAmount",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "pmFee",
+          "type": "uint256"
+        }
+      ],
+      "name": "MilestoneApproved",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "uint256",
+          "name": "projectId",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "milestoneIndex",
+          "type": "uint256"
+        }
+      ],
+      "name": "MilestoneCompleted",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "uint256",
+          "name": "projectId",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "milestoneIndex",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "amount",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "bool",
+          "name": "autoReleased",
+          "type": "bool"
+        }
+      ],
+      "name": "MilestonePaid",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "uint256",
+          "name": "projectId",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "milestoneIndex",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "string",
+          "name": "reason",
+          "type": "string"
+        }
+      ],
+      "name": "MilestoneRejected",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "uint256",
+          "name": "projectId",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "milestoneIndex",
+          "type": "uint256"
+        }
+      ],
+      "name": "MilestoneStarted",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "uint256",
+          "name": "projectId",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "milestoneIndex",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "string",
+          "name": "note",
+          "type": "string"
+        }
+      ],
+      "name": "MilestoneSubmitted",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "uint256",
+          "name": "projectId",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "refundAmount",
+          "type": "uint256"
+        }
+      ],
+      "name": "ProjectCancelled",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "uint256",
+          "name": "projectId",
+          "type": "uint256"
+        },
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "client",
+          "type": "address"
+        },
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "freelancer",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "internalType": "address",
+          "name": "pm",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "pmFeeBps",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "totalAmount",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "milestoneCount",
+          "type": "uint256"
+        }
+      ],
+      "name": "ProjectCreated",
+      "type": "event"
+    },
+    {
+      "inputs": [],
+      "name": "BPS_DENOMINATOR",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "MAX_PM_FEE_BPS",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "MIN_MILESTONE_AMOUNT",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "TIMEOUT_PERIOD",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "projectId",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "milestoneIndex",
+          "type": "uint256"
+        }
+      ],
+      "name": "approveMilestone",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "projectId",
+          "type": "uint256"
+        }
+      ],
+      "name": "cancelProject",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "projectId",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "milestoneIndex",
+          "type": "uint256"
+        }
+      ],
+      "name": "completeMilestone",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "freelancer",
+          "type": "address"
+        },
+        {
+          "internalType": "address",
+          "name": "pm",
+          "type": "address"
+        },
+        {
+          "internalType": "uint256",
+          "name": "pmFeeBps",
+          "type": "uint256"
+        },
+        {
+          "internalType": "string[]",
+          "name": "descriptions",
+          "type": "string[]"
+        },
+        {
+          "internalType": "uint256[]",
+          "name": "amounts",
+          "type": "uint256[]"
+        }
+      ],
+      "name": "createProject",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "payable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "projectId",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "milestoneIndex",
+          "type": "uint256"
+        }
+      ],
+      "name": "emergencyReclaim",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "projectId",
+          "type": "uint256"
+        }
+      ],
+      "name": "getAllMilestones",
+      "outputs": [
+        {
+          "internalType": "string[]",
+          "name": "descriptions",
+          "type": "string[]"
+        },
+        {
+          "internalType": "uint256[]",
+          "name": "amounts",
+          "type": "uint256[]"
+        },
+        {
+          "internalType": "enum MilestoneEscrow.MilestoneStatus[]",
+          "name": "statuses",
+          "type": "uint8[]"
+        },
+        {
+          "internalType": "uint256[]",
+          "name": "submittedAts",
+          "type": "uint256[]"
+        },
+        {
+          "internalType": "string[]",
+          "name": "submissionNotes",
+          "type": "string[]"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "projectId",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "milestoneIndex",
+          "type": "uint256"
+        }
+      ],
+      "name": "getMilestone",
+      "outputs": [
+        {
+          "internalType": "string",
+          "name": "description",
+          "type": "string"
+        },
+        {
+          "internalType": "uint256",
+          "name": "amount",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "createdAt",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "submittedAt",
+          "type": "uint256"
+        },
+        {
+          "internalType": "enum MilestoneEscrow.MilestoneStatus",
+          "name": "status",
+          "type": "uint8"
+        },
+        {
+          "internalType": "string",
+          "name": "submissionNote",
+          "type": "string"
+        },
+        {
+          "internalType": "bool",
+          "name": "canAutoRelease",
+          "type": "bool"
+        },
+        {
+          "internalType": "uint256",
+          "name": "timeUntilAutoRelease",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "projectId",
+          "type": "uint256"
+        }
+      ],
+      "name": "getProject",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "client",
+          "type": "address"
+        },
+        {
+          "internalType": "address",
+          "name": "freelancer",
+          "type": "address"
+        },
+        {
+          "internalType": "address",
+          "name": "pm",
+          "type": "address"
+        },
+        {
+          "internalType": "uint256",
+          "name": "pmFeeBps",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "totalAmount",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "totalPaid",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "totalPmFees",
+          "type": "uint256"
+        },
+        {
+          "internalType": "bool",
+          "name": "active",
+          "type": "bool"
+        },
+        {
+          "internalType": "uint256",
+          "name": "milestoneCount",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "projectId",
+          "type": "uint256"
+        }
+      ],
+      "name": "getProjectStats",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "totalMilestones",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "completedMilestones",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "paidMilestones",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "remainingAmount",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "projectCount",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "name": "projects",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "client",
+          "type": "address"
+        },
+        {
+          "internalType": "address",
+          "name": "freelancer",
+          "type": "address"
+        },
+        {
+          "internalType": "address",
+          "name": "pm",
+          "type": "address"
+        },
+        {
+          "internalType": "uint256",
+          "name": "pmFeeBps",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "totalAmount",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "totalPaid",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "totalPmFees",
+          "type": "uint256"
+        },
+        {
+          "internalType": "bool",
+          "name": "active",
+          "type": "bool"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "projectId",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "milestoneIndex",
+          "type": "uint256"
+        },
+        {
+          "internalType": "string",
+          "name": "reason",
+          "type": "string"
+        }
+      ],
+      "name": "rejectMilestone",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "projectId",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "milestoneIndex",
+          "type": "uint256"
+        }
+      ],
+      "name": "releaseMilestone",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "projectId",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "milestoneIndex",
+          "type": "uint256"
+        }
+      ],
+      "name": "startMilestone",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "projectId",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "milestoneIndex",
+          "type": "uint256"
+        },
+        {
+          "internalType": "string",
+          "name": "note",
+          "type": "string"
+        }
+      ],
+      "name": "submitMilestone",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    }
+  ],
+  "transactionHash": "0xa99f78ecbaba7364a8d7d023ae74838949f08d1ba60d892d89aaaa42999fbc8e",
+  "receipt": {
+    "to": null,
+    "from": "0xFC936D319713DebEEC415a745AC4Ec631f13b1B0",
+    "contractAddress": "0xe0285d1a76B61DD8c40947b8BcA708aC5657e7EA",
+    "transactionIndex": 0,
+    "gasUsed": "2721751",
+    "logsBloom": "0x00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+    "blockHash": "0x4a5104c639d2f8a31d79821dd63aa3e0a1353534065bbc38dc8788bfd682e977",
+    "transactionHash": "0xa99f78ecbaba7364a8d7d023ae74838949f08d1ba60d892d89aaaa42999fbc8e",
+    "logs": [],
+    "blockNumber": 19614201,
+    "cumulativeGasUsed": "2721751",
+    "status": 1,
+    "byzantium": true
+  },
+  "args": [],
+  "numDeployments": 1,
+  "solcInputHash": "e6f8a36d8784c7d533fbb925d28c780f",
+  "metadata": "{\"compiler\":{\"version\":\"0.8.30+commit.73712a01\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[],\"name\":\"ReentrancyGuardReentrantCall\",\"type\":\"error\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"uint256\",\"name\":\"projectId\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"milestoneIndex\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"freelancerAmount\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"pmFee\",\"type\":\"uint256\"}],\"name\":\"MilestoneApproved\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"uint256\",\"name\":\"projectId\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"milestoneIndex\",\"type\":\"uint256\"}],\"name\":\"MilestoneCompleted\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"uint256\",\"name\":\"projectId\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"milestoneIndex\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"amount\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"bool\",\"name\":\"autoReleased\",\"type\":\"bool\"}],\"name\":\"MilestonePaid\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"uint256\",\"name\":\"projectId\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"milestoneIndex\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"string\",\"name\":\"reason\",\"type\":\"string\"}],\"name\":\"MilestoneRejected\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"uint256\",\"name\":\"projectId\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"milestoneIndex\",\"type\":\"uint256\"}],\"name\":\"MilestoneStarted\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"uint256\",\"name\":\"projectId\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"milestoneIndex\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"string\",\"name\":\"note\",\"type\":\"string\"}],\"name\":\"MilestoneSubmitted\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"uint256\",\"name\":\"projectId\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"refundAmount\",\"type\":\"uint256\"}],\"name\":\"ProjectCancelled\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"uint256\",\"name\":\"projectId\",\"type\":\"uint256\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"client\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"freelancer\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"address\",\"name\":\"pm\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"pmFeeBps\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"totalAmount\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"milestoneCount\",\"type\":\"uint256\"}],\"name\":\"ProjectCreated\",\"type\":\"event\"},{\"inputs\":[],\"name\":\"BPS_DENOMINATOR\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"MAX_PM_FEE_BPS\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"MIN_MILESTONE_AMOUNT\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"TIMEOUT_PERIOD\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"projectId\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"milestoneIndex\",\"type\":\"uint256\"}],\"name\":\"approveMilestone\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"projectId\",\"type\":\"uint256\"}],\"name\":\"cancelProject\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"projectId\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"milestoneIndex\",\"type\":\"uint256\"}],\"name\":\"completeMilestone\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"freelancer\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"pm\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"pmFeeBps\",\"type\":\"uint256\"},{\"internalType\":\"string[]\",\"name\":\"descriptions\",\"type\":\"string[]\"},{\"internalType\":\"uint256[]\",\"name\":\"amounts\",\"type\":\"uint256[]\"}],\"name\":\"createProject\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"payable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"projectId\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"milestoneIndex\",\"type\":\"uint256\"}],\"name\":\"emergencyReclaim\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"projectId\",\"type\":\"uint256\"}],\"name\":\"getAllMilestones\",\"outputs\":[{\"internalType\":\"string[]\",\"name\":\"descriptions\",\"type\":\"string[]\"},{\"internalType\":\"uint256[]\",\"name\":\"amounts\",\"type\":\"uint256[]\"},{\"internalType\":\"enum MilestoneEscrow.MilestoneStatus[]\",\"name\":\"statuses\",\"type\":\"uint8[]\"},{\"internalType\":\"uint256[]\",\"name\":\"submittedAts\",\"type\":\"uint256[]\"},{\"internalType\":\"string[]\",\"name\":\"submissionNotes\",\"type\":\"string[]\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"projectId\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"milestoneIndex\",\"type\":\"uint256\"}],\"name\":\"getMilestone\",\"outputs\":[{\"internalType\":\"string\",\"name\":\"description\",\"type\":\"string\"},{\"internalType\":\"uint256\",\"name\":\"amount\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"createdAt\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"submittedAt\",\"type\":\"uint256\"},{\"internalType\":\"enum MilestoneEscrow.MilestoneStatus\",\"name\":\"status\",\"type\":\"uint8\"},{\"internalType\":\"string\",\"name\":\"submissionNote\",\"type\":\"string\"},{\"internalType\":\"bool\",\"name\":\"canAutoRelease\",\"type\":\"bool\"},{\"internalType\":\"uint256\",\"name\":\"timeUntilAutoRelease\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"projectId\",\"type\":\"uint256\"}],\"name\":\"getProject\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"client\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"freelancer\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"pm\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"pmFeeBps\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"totalAmount\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"totalPaid\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"totalPmFees\",\"type\":\"uint256\"},{\"internalType\":\"bool\",\"name\":\"active\",\"type\":\"bool\"},{\"internalType\":\"uint256\",\"name\":\"milestoneCount\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"projectId\",\"type\":\"uint256\"}],\"name\":\"getProjectStats\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"totalMilestones\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"completedMilestones\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"paidMilestones\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"remainingAmount\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"projectCount\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"name\":\"projects\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"client\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"freelancer\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"pm\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"pmFeeBps\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"totalAmount\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"totalPaid\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"totalPmFees\",\"type\":\"uint256\"},{\"internalType\":\"bool\",\"name\":\"active\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"projectId\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"milestoneIndex\",\"type\":\"uint256\"},{\"internalType\":\"string\",\"name\":\"reason\",\"type\":\"string\"}],\"name\":\"rejectMilestone\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"projectId\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"milestoneIndex\",\"type\":\"uint256\"}],\"name\":\"releaseMilestone\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"projectId\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"milestoneIndex\",\"type\":\"uint256\"}],\"name\":\"startMilestone\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"projectId\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"milestoneIndex\",\"type\":\"uint256\"},{\"internalType\":\"string\",\"name\":\"note\",\"type\":\"string\"}],\"name\":\"submitMilestone\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"}],\"devdoc\":{\"details\":\"Enhanced version with status state machine, PM fees, and role-based actions\",\"errors\":{\"ReentrancyGuardReentrantCall()\":[{\"details\":\"Unauthorized reentrant call.\"}]},\"kind\":\"dev\",\"methods\":{\"approveMilestone(uint256,uint256)\":{\"params\":{\"milestoneIndex\":\"Index of the milestone\",\"projectId\":\"The project ID\"}},\"cancelProject(uint256)\":{\"details\":\"Can only be called by client for projects with no approved/submitted milestones\",\"params\":{\"projectId\":\"The project ID\"}},\"completeMilestone(uint256,uint256)\":{\"details\":\"Equivalent to approve for backwards compatibility\",\"params\":{\"milestoneIndex\":\"Index of the milestone\",\"projectId\":\"The project ID\"}},\"createProject(address,address,uint256,string[],uint256[])\":{\"params\":{\"amounts\":\"Array of milestone amounts (in wei)\",\"descriptions\":\"Array of milestone descriptions\",\"freelancer\":\"Address of the freelancer\",\"pm\":\"Address of the project manager (can be address(0) for no PM)\",\"pmFeeBps\":\"PM fee in basis points (0-2000, i.e., 0-20%)\"}},\"emergencyReclaim(uint256,uint256)\":{\"details\":\"Client can reclaim funds from a milestone that cannot be paid\",\"params\":{\"milestoneIndex\":\"Index of the milestone\",\"projectId\":\"The project ID\"}},\"getAllMilestones(uint256)\":{\"details\":\"Returns arrays of milestone data for easier frontend consumption\"},\"rejectMilestone(uint256,uint256,string)\":{\"params\":{\"milestoneIndex\":\"Index of the milestone\",\"projectId\":\"The project ID\",\"reason\":\"Reason for rejection\"}},\"releaseMilestone(uint256,uint256)\":{\"details\":\"Can be called by anyone, but requires milestone to be completed/approved or timed out\",\"params\":{\"milestoneIndex\":\"Index of the milestone\",\"projectId\":\"The project ID\"}},\"startMilestone(uint256,uint256)\":{\"params\":{\"milestoneIndex\":\"Index of the milestone\",\"projectId\":\"The project ID\"}},\"submitMilestone(uint256,uint256,string)\":{\"params\":{\"milestoneIndex\":\"Index of the milestone\",\"note\":\"Submission note describing deliverables\",\"projectId\":\"The project ID\"}}},\"title\":\"MilestoneEscrow\",\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{\"approveMilestone(uint256,uint256)\":{\"notice\":\"Client approves a milestone and triggers payment\"},\"cancelProject(uint256)\":{\"notice\":\"Cancel project and refund unpaid milestones to client\"},\"completeMilestone(uint256,uint256)\":{\"notice\":\"Client marks milestone as completed (legacy support)\"},\"createProject(address,address,uint256,string[],uint256[])\":{\"notice\":\"Create new project with milestones and optional PM\"},\"emergencyReclaim(uint256,uint256)\":{\"notice\":\"Emergency withdrawal for specific milestone\"},\"getAllMilestones(uint256)\":{\"notice\":\"Get all milestones for a project\"},\"getMilestone(uint256,uint256)\":{\"notice\":\"Get milestone details\"},\"getProject(uint256)\":{\"notice\":\"Get project details\"},\"getProjectStats(uint256)\":{\"notice\":\"Get project statistics\"},\"rejectMilestone(uint256,uint256,string)\":{\"notice\":\"Client rejects a milestone submission\"},\"releaseMilestone(uint256,uint256)\":{\"notice\":\"Release payment for completed/approved milestone\"},\"startMilestone(uint256,uint256)\":{\"notice\":\"Freelancer starts working on a milestone\"},\"submitMilestone(uint256,uint256,string)\":{\"notice\":\"Freelancer submits a completed milestone\"}},\"notice\":\"Milestone-based escrow for freelance payments with PM fee mechanism\",\"version\":1}},\"settings\":{\"compilationTarget\":{\"contracts/MilestoneEscrow.sol\":\"MilestoneEscrow\"},\"evmVersion\":\"paris\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\",\"useLiteralContent\":true},\"optimizer\":{\"enabled\":true,\"runs\":200},\"remappings\":[]},\"sources\":{\"@openzeppelin/contracts/utils/ReentrancyGuard.sol\":{\"content\":\"// SPDX-License-Identifier: MIT\\n// OpenZeppelin Contracts (last updated v5.0.0) (utils/ReentrancyGuard.sol)\\n\\npragma solidity ^0.8.20;\\n\\n/**\\n * @dev Contract module that helps prevent reentrant calls to a function.\\n *\\n * Inheriting from `ReentrancyGuard` will make the {nonReentrant} modifier\\n * available, which can be applied to functions to make sure there are no nested\\n * (reentrant) calls to them.\\n *\\n * Note that because there is a single `nonReentrant` guard, functions marked as\\n * `nonReentrant` may not call one another. This can be worked around by making\\n * those functions `private`, and then adding `external` `nonReentrant` entry\\n * points to them.\\n *\\n * TIP: If you would like to learn more about reentrancy and alternative ways\\n * to protect against it, check out our blog post\\n * https://blog.openzeppelin.com/reentrancy-after-istanbul/[Reentrancy After Istanbul].\\n */\\nabstract contract ReentrancyGuard {\\n    // Booleans are more expensive than uint256 or any type that takes up a full\\n    // word because each write operation emits an extra SLOAD to first read the\\n    // slot's contents, replace the bits taken up by the boolean, and then write\\n    // back. This is the compiler's defense against contract upgrades and\\n    // pointer aliasing, and it cannot be disabled.\\n\\n    // The values being non-zero value makes deployment a bit more expensive,\\n    // but in exchange the refund on every call to nonReentrant will be lower in\\n    // amount. Since refunds are capped to a percentage of the total\\n    // transaction's gas, it is best to keep them low in cases like this one, to\\n    // increase the likelihood of the full refund coming into effect.\\n    uint256 private constant NOT_ENTERED = 1;\\n    uint256 private constant ENTERED = 2;\\n\\n    uint256 private _status;\\n\\n    /**\\n     * @dev Unauthorized reentrant call.\\n     */\\n    error ReentrancyGuardReentrantCall();\\n\\n    constructor() {\\n        _status = NOT_ENTERED;\\n    }\\n\\n    /**\\n     * @dev Prevents a contract from calling itself, directly or indirectly.\\n     * Calling a `nonReentrant` function from another `nonReentrant`\\n     * function is not supported. It is possible to prevent this from happening\\n     * by making the `nonReentrant` function external, and making it call a\\n     * `private` function that does the actual work.\\n     */\\n    modifier nonReentrant() {\\n        _nonReentrantBefore();\\n        _;\\n        _nonReentrantAfter();\\n    }\\n\\n    function _nonReentrantBefore() private {\\n        // On the first call to nonReentrant, _status will be NOT_ENTERED\\n        if (_status == ENTERED) {\\n            revert ReentrancyGuardReentrantCall();\\n        }\\n\\n        // Any calls to nonReentrant after this point will fail\\n        _status = ENTERED;\\n    }\\n\\n    function _nonReentrantAfter() private {\\n        // By storing the original value once again, a refund is triggered (see\\n        // https://eips.ethereum.org/EIPS/eip-2200)\\n        _status = NOT_ENTERED;\\n    }\\n\\n    /**\\n     * @dev Returns true if the reentrancy guard is currently set to \\\"entered\\\", which indicates there is a\\n     * `nonReentrant` function in the call stack.\\n     */\\n    function _reentrancyGuardEntered() internal view returns (bool) {\\n        return _status == ENTERED;\\n    }\\n}\\n\",\"keccak256\":\"0xf980daa263b661ab8ddee7d4fd833c7da7e7995e2c359ff1f17e67e4112f2236\",\"license\":\"MIT\"},\"contracts/MilestoneEscrow.sol\":{\"content\":\"// SPDX-License-Identifier: MIT\\npragma solidity ^0.8.20;\\n\\nimport \\\"@openzeppelin/contracts/utils/ReentrancyGuard.sol\\\";\\n\\n/**\\n * @title MilestoneEscrow\\n * @notice Milestone-based escrow for freelance payments with PM fee mechanism\\n * @dev Enhanced version with status state machine, PM fees, and role-based actions\\n */\\ncontract MilestoneEscrow is ReentrancyGuard {\\n    enum MilestoneStatus { Created, InProgress, Submitted, Approved, Paid }\\n\\n    struct Milestone {\\n        string description;\\n        uint256 amount;\\n        uint256 createdAt;\\n        uint256 submittedAt;\\n        MilestoneStatus status;\\n        string submissionNote;\\n    }\\n\\n    struct Project {\\n        address client;\\n        address freelancer;\\n        address pm;\\n        uint256 pmFeeBps;\\n        uint256 totalAmount;\\n        uint256 totalPaid;\\n        uint256 totalPmFees;\\n        bool active;\\n        Milestone[] milestones;\\n    }\\n\\n    uint256 public projectCount;\\n    mapping(uint256 => Project) public projects;\\n\\n    uint256 public constant TIMEOUT_PERIOD = 14 days;\\n    uint256 public constant MIN_MILESTONE_AMOUNT = 0.001 ether;\\n    uint256 public constant MAX_PM_FEE_BPS = 2000; // 20%\\n    uint256 public constant BPS_DENOMINATOR = 10000;\\n\\n    event ProjectCreated(\\n        uint256 indexed projectId,\\n        address indexed client,\\n        address indexed freelancer,\\n        address pm,\\n        uint256 pmFeeBps,\\n        uint256 totalAmount,\\n        uint256 milestoneCount\\n    );\\n    event MilestoneStarted(uint256 indexed projectId, uint256 milestoneIndex);\\n    event MilestoneSubmitted(uint256 indexed projectId, uint256 milestoneIndex, string note);\\n    event MilestoneApproved(uint256 indexed projectId, uint256 milestoneIndex, uint256 freelancerAmount, uint256 pmFee);\\n    event MilestoneRejected(uint256 indexed projectId, uint256 milestoneIndex, string reason);\\n    event MilestoneCompleted(uint256 indexed projectId, uint256 milestoneIndex);\\n    event MilestonePaid(\\n        uint256 indexed projectId,\\n        uint256 milestoneIndex,\\n        uint256 amount,\\n        bool autoReleased\\n    );\\n    event ProjectCancelled(uint256 indexed projectId, uint256 refundAmount);\\n\\n    modifier onlyClient(uint256 projectId) {\\n        require(msg.sender == projects[projectId].client, \\\"Only client\\\");\\n        _;\\n    }\\n\\n    modifier onlyFreelancer(uint256 projectId) {\\n        require(msg.sender == projects[projectId].freelancer, \\\"Only freelancer\\\");\\n        _;\\n    }\\n\\n    modifier projectActive(uint256 projectId) {\\n        require(projects[projectId].active, \\\"Project not active\\\");\\n        _;\\n    }\\n\\n    modifier validMilestoneIndex(uint256 projectId, uint256 milestoneIndex) {\\n        require(milestoneIndex < projects[projectId].milestones.length, \\\"Invalid milestone index\\\");\\n        _;\\n    }\\n\\n    /**\\n     * @notice Create new project with milestones and optional PM\\n     * @param freelancer Address of the freelancer\\n     * @param pm Address of the project manager (can be address(0) for no PM)\\n     * @param pmFeeBps PM fee in basis points (0-2000, i.e., 0-20%)\\n     * @param descriptions Array of milestone descriptions\\n     * @param amounts Array of milestone amounts (in wei)\\n     */\\n    function createProject(\\n        address freelancer,\\n        address pm,\\n        uint256 pmFeeBps,\\n        string[] memory descriptions,\\n        uint256[] memory amounts\\n    ) external payable returns (uint256) {\\n        require(freelancer != address(0), \\\"Invalid freelancer address\\\");\\n        require(freelancer != msg.sender, \\\"Client cannot be freelancer\\\");\\n        require(descriptions.length == amounts.length, \\\"Array length mismatch\\\");\\n        require(descriptions.length > 0, \\\"Need at least one milestone\\\");\\n        require(descriptions.length <= 50, \\\"Too many milestones\\\");\\n        require(pmFeeBps <= MAX_PM_FEE_BPS, \\\"PM fee too high\\\");\\n\\n        // If PM is set, fee must be > 0; if no PM, fee must be 0\\n        if (pm != address(0)) {\\n            require(pm != msg.sender, \\\"Client cannot be PM\\\");\\n            require(pm != freelancer, \\\"Freelancer cannot be PM\\\");\\n        } else {\\n            require(pmFeeBps == 0, \\\"Cannot set fee without PM\\\");\\n        }\\n\\n        uint256 total = 0;\\n        for (uint256 i = 0; i < amounts.length; i++) {\\n            require(amounts[i] >= MIN_MILESTONE_AMOUNT, \\\"Amount too small\\\");\\n            require(bytes(descriptions[i]).length > 0, \\\"Description required\\\");\\n            require(bytes(descriptions[i]).length <= 500, \\\"Description too long\\\");\\n            total += amounts[i];\\n        }\\n        require(msg.value == total, \\\"Incorrect payment amount\\\");\\n\\n        uint256 projectId = projectCount++;\\n        Project storage project = projects[projectId];\\n        project.client = msg.sender;\\n        project.freelancer = freelancer;\\n        project.pm = pm;\\n        project.pmFeeBps = pmFeeBps;\\n        project.totalAmount = total;\\n        project.totalPaid = 0;\\n        project.totalPmFees = 0;\\n        project.active = true;\\n\\n        for (uint256 i = 0; i < descriptions.length; i++) {\\n            project.milestones.push(Milestone({\\n                description: descriptions[i],\\n                amount: amounts[i],\\n                createdAt: block.timestamp,\\n                submittedAt: 0,\\n                status: MilestoneStatus.Created,\\n                submissionNote: \\\"\\\"\\n            }));\\n        }\\n\\n        emit ProjectCreated(projectId, msg.sender, freelancer, pm, pmFeeBps, total, descriptions.length);\\n        return projectId;\\n    }\\n\\n    /**\\n     * @notice Freelancer starts working on a milestone\\n     * @param projectId The project ID\\n     * @param milestoneIndex Index of the milestone\\n     */\\n    function startMilestone(uint256 projectId, uint256 milestoneIndex)\\n        external\\n        onlyFreelancer(projectId)\\n        projectActive(projectId)\\n        validMilestoneIndex(projectId, milestoneIndex)\\n    {\\n        Milestone storage milestone = projects[projectId].milestones[milestoneIndex];\\n        require(milestone.status == MilestoneStatus.Created, \\\"Milestone not in Created status\\\");\\n\\n        milestone.status = MilestoneStatus.InProgress;\\n        emit MilestoneStarted(projectId, milestoneIndex);\\n    }\\n\\n    /**\\n     * @notice Freelancer submits a completed milestone\\n     * @param projectId The project ID\\n     * @param milestoneIndex Index of the milestone\\n     * @param note Submission note describing deliverables\\n     */\\n    function submitMilestone(uint256 projectId, uint256 milestoneIndex, string memory note)\\n        external\\n        onlyFreelancer(projectId)\\n        projectActive(projectId)\\n        validMilestoneIndex(projectId, milestoneIndex)\\n    {\\n        Milestone storage milestone = projects[projectId].milestones[milestoneIndex];\\n        require(\\n            milestone.status == MilestoneStatus.InProgress || milestone.status == MilestoneStatus.Created,\\n            \\\"Cannot submit from current status\\\"\\n        );\\n\\n        milestone.status = MilestoneStatus.Submitted;\\n        milestone.submittedAt = block.timestamp;\\n        milestone.submissionNote = note;\\n\\n        emit MilestoneSubmitted(projectId, milestoneIndex, note);\\n    }\\n\\n    /**\\n     * @notice Client approves a milestone and triggers payment\\n     * @param projectId The project ID\\n     * @param milestoneIndex Index of the milestone\\n     */\\n    function approveMilestone(uint256 projectId, uint256 milestoneIndex)\\n        external\\n        nonReentrant\\n        onlyClient(projectId)\\n        projectActive(projectId)\\n        validMilestoneIndex(projectId, milestoneIndex)\\n    {\\n        Project storage project = projects[projectId];\\n        Milestone storage milestone = project.milestones[milestoneIndex];\\n        require(milestone.status == MilestoneStatus.Submitted, \\\"Milestone not submitted\\\");\\n\\n        // Calculate PM fee\\n        uint256 pmFee = (milestone.amount * project.pmFeeBps) / BPS_DENOMINATOR;\\n        uint256 freelancerAmount = milestone.amount - pmFee;\\n\\n        // Update state before external calls\\n        milestone.status = MilestoneStatus.Paid;\\n        project.totalPaid += milestone.amount;\\n        project.totalPmFees += pmFee;\\n\\n        // Transfer to freelancer\\n        (bool s1,) = project.freelancer.call{value: freelancerAmount}(\\\"\\\");\\n        require(s1, \\\"Freelancer transfer failed\\\");\\n\\n        // Transfer to PM (if exists and fee > 0)\\n        if (project.pm != address(0) && pmFee > 0) {\\n            (bool s2,) = project.pm.call{value: pmFee}(\\\"\\\");\\n            require(s2, \\\"PM transfer failed\\\");\\n        }\\n\\n        emit MilestoneApproved(projectId, milestoneIndex, freelancerAmount, pmFee);\\n    }\\n\\n    /**\\n     * @notice Client rejects a milestone submission\\n     * @param projectId The project ID\\n     * @param milestoneIndex Index of the milestone\\n     * @param reason Reason for rejection\\n     */\\n    function rejectMilestone(uint256 projectId, uint256 milestoneIndex, string memory reason)\\n        external\\n        onlyClient(projectId)\\n        projectActive(projectId)\\n        validMilestoneIndex(projectId, milestoneIndex)\\n    {\\n        Milestone storage milestone = projects[projectId].milestones[milestoneIndex];\\n        require(milestone.status == MilestoneStatus.Submitted, \\\"Milestone not submitted\\\");\\n\\n        milestone.status = MilestoneStatus.InProgress;\\n        milestone.submittedAt = 0;\\n        milestone.submissionNote = \\\"\\\";\\n\\n        emit MilestoneRejected(projectId, milestoneIndex, reason);\\n    }\\n\\n    /**\\n     * @notice Client marks milestone as completed (legacy support)\\n     * @dev Equivalent to approve for backwards compatibility\\n     * @param projectId The project ID\\n     * @param milestoneIndex Index of the milestone\\n     */\\n    function completeMilestone(uint256 projectId, uint256 milestoneIndex)\\n        external\\n        onlyClient(projectId)\\n        projectActive(projectId)\\n        validMilestoneIndex(projectId, milestoneIndex)\\n    {\\n        Milestone storage milestone = projects[projectId].milestones[milestoneIndex];\\n        require(\\n            milestone.status != MilestoneStatus.Approved && milestone.status != MilestoneStatus.Paid,\\n            \\\"Already completed or paid\\\"\\n        );\\n\\n        milestone.status = MilestoneStatus.Approved;\\n        emit MilestoneCompleted(projectId, milestoneIndex);\\n    }\\n\\n    /**\\n     * @notice Release payment for completed/approved milestone\\n     * @dev Can be called by anyone, but requires milestone to be completed/approved or timed out\\n     * @param projectId The project ID\\n     * @param milestoneIndex Index of the milestone\\n     */\\n    function releaseMilestone(uint256 projectId, uint256 milestoneIndex)\\n        external\\n        nonReentrant\\n        validMilestoneIndex(projectId, milestoneIndex)\\n    {\\n        Project storage project = projects[projectId];\\n        require(project.active, \\\"Project not active\\\");\\n\\n        Milestone storage milestone = project.milestones[milestoneIndex];\\n        require(milestone.status != MilestoneStatus.Paid, \\\"Already paid\\\");\\n\\n        bool isApproved = milestone.status == MilestoneStatus.Approved;\\n        bool isTimedOut = block.timestamp >= milestone.createdAt + TIMEOUT_PERIOD;\\n        bool canRelease = isApproved || isTimedOut;\\n\\n        require(canRelease, \\\"Not ready to release\\\");\\n\\n        // Calculate PM fee\\n        uint256 pmFee = (milestone.amount * project.pmFeeBps) / BPS_DENOMINATOR;\\n        uint256 freelancerAmount = milestone.amount - pmFee;\\n\\n        // Update state before external calls\\n        milestone.status = MilestoneStatus.Paid;\\n        project.totalPaid += milestone.amount;\\n        project.totalPmFees += pmFee;\\n\\n        // Transfer to freelancer\\n        (bool s1,) = project.freelancer.call{value: freelancerAmount}(\\\"\\\");\\n        require(s1, \\\"Transfer failed\\\");\\n\\n        // Transfer to PM (if exists and fee > 0)\\n        if (project.pm != address(0) && pmFee > 0) {\\n            (bool s2,) = project.pm.call{value: pmFee}(\\\"\\\");\\n            require(s2, \\\"PM transfer failed\\\");\\n        }\\n\\n        emit MilestonePaid(projectId, milestoneIndex, milestone.amount, isTimedOut);\\n    }\\n\\n    /**\\n     * @notice Cancel project and refund unpaid milestones to client\\n     * @dev Can only be called by client for projects with no approved/submitted milestones\\n     * @param projectId The project ID\\n     */\\n    function cancelProject(uint256 projectId)\\n        external\\n        onlyClient(projectId)\\n        projectActive(projectId)\\n        nonReentrant\\n    {\\n        Project storage project = projects[projectId];\\n\\n        // Calculate refund amount (only unpaid milestones that aren't approved/submitted)\\n        uint256 refundAmount = 0;\\n        bool hasInProgressWork = false;\\n\\n        for (uint256 i = 0; i < project.milestones.length; i++) {\\n            MilestoneStatus status = project.milestones[i].status;\\n            if (status == MilestoneStatus.Approved || status == MilestoneStatus.Submitted) {\\n                hasInProgressWork = true;\\n                break;\\n            }\\n            if (status != MilestoneStatus.Paid) {\\n                refundAmount += project.milestones[i].amount;\\n            }\\n        }\\n\\n        require(!hasInProgressWork, \\\"Cannot cancel with approved or submitted milestones\\\");\\n        require(refundAmount > 0, \\\"No funds to refund\\\");\\n\\n        // Mark project as inactive and all unpaid milestones as paid\\n        project.active = false;\\n        for (uint256 i = 0; i < project.milestones.length; i++) {\\n            if (project.milestones[i].status != MilestoneStatus.Paid) {\\n                project.milestones[i].status = MilestoneStatus.Paid;\\n            }\\n        }\\n\\n        // Refund to client\\n        (bool success, ) = project.client.call{value: refundAmount}(\\\"\\\");\\n        require(success, \\\"Refund failed\\\");\\n\\n        emit ProjectCancelled(projectId, refundAmount);\\n    }\\n\\n    /**\\n     * @notice Emergency withdrawal for specific milestone\\n     * @dev Client can reclaim funds from a milestone that cannot be paid\\n     * @param projectId The project ID\\n     * @param milestoneIndex Index of the milestone\\n     */\\n    function emergencyReclaim(uint256 projectId, uint256 milestoneIndex)\\n        external\\n        onlyClient(projectId)\\n        projectActive(projectId)\\n        validMilestoneIndex(projectId, milestoneIndex)\\n        nonReentrant\\n    {\\n        Project storage project = projects[projectId];\\n        Milestone storage milestone = project.milestones[milestoneIndex];\\n\\n        require(milestone.status != MilestoneStatus.Paid, \\\"Already paid\\\");\\n        require(\\n            milestone.status != MilestoneStatus.Approved && milestone.status != MilestoneStatus.Submitted,\\n            \\\"Cannot reclaim approved or submitted milestone\\\"\\n        );\\n\\n        // Must wait longer than normal timeout\\n        uint256 emergencyTimeout = milestone.createdAt + (TIMEOUT_PERIOD * 2);\\n        require(block.timestamp >= emergencyTimeout, \\\"Emergency timeout not reached\\\");\\n\\n        // Mark as paid to prevent double withdrawal\\n        milestone.status = MilestoneStatus.Paid;\\n\\n        // Return to client\\n        (bool success, ) = project.client.call{value: milestone.amount}(\\\"\\\");\\n        require(success, \\\"Emergency reclaim failed\\\");\\n\\n        emit MilestonePaid(projectId, milestoneIndex, milestone.amount, true);\\n    }\\n\\n    /**\\n     * @notice Get project details\\n     */\\n    function getProject(uint256 projectId) external view returns (\\n        address client,\\n        address freelancer,\\n        address pm,\\n        uint256 pmFeeBps,\\n        uint256 totalAmount,\\n        uint256 totalPaid,\\n        uint256 totalPmFees,\\n        bool active,\\n        uint256 milestoneCount\\n    ) {\\n        Project storage project = projects[projectId];\\n        return (\\n            project.client,\\n            project.freelancer,\\n            project.pm,\\n            project.pmFeeBps,\\n            project.totalAmount,\\n            project.totalPaid,\\n            project.totalPmFees,\\n            project.active,\\n            project.milestones.length\\n        );\\n    }\\n\\n    /**\\n     * @notice Get milestone details\\n     */\\n    function getMilestone(uint256 projectId, uint256 milestoneIndex)\\n        external\\n        view\\n        validMilestoneIndex(projectId, milestoneIndex)\\n        returns (\\n            string memory description,\\n            uint256 amount,\\n            uint256 createdAt,\\n            uint256 submittedAt,\\n            MilestoneStatus status,\\n            string memory submissionNote,\\n            bool canAutoRelease,\\n            uint256 timeUntilAutoRelease\\n        )\\n    {\\n        Milestone storage milestone = projects[projectId].milestones[milestoneIndex];\\n        bool autoRelease = block.timestamp >= milestone.createdAt + TIMEOUT_PERIOD;\\n\\n        uint256 timeLeft = 0;\\n        if (!autoRelease) {\\n            timeLeft = (milestone.createdAt + TIMEOUT_PERIOD) - block.timestamp;\\n        }\\n\\n        return (\\n            milestone.description,\\n            milestone.amount,\\n            milestone.createdAt,\\n            milestone.submittedAt,\\n            milestone.status,\\n            milestone.submissionNote,\\n            autoRelease,\\n            timeLeft\\n        );\\n    }\\n\\n    /**\\n     * @notice Get all milestones for a project\\n     * @dev Returns arrays of milestone data for easier frontend consumption\\n     */\\n    function getAllMilestones(uint256 projectId) external view returns (\\n        string[] memory descriptions,\\n        uint256[] memory amounts,\\n        MilestoneStatus[] memory statuses,\\n        uint256[] memory submittedAts,\\n        string[] memory submissionNotes\\n    ) {\\n        Project storage project = projects[projectId];\\n        uint256 length = project.milestones.length;\\n\\n        descriptions = new string[](length);\\n        amounts = new uint256[](length);\\n        statuses = new MilestoneStatus[](length);\\n        submittedAts = new uint256[](length);\\n        submissionNotes = new string[](length);\\n\\n        for (uint256 i = 0; i < length; i++) {\\n            Milestone storage milestone = project.milestones[i];\\n            descriptions[i] = milestone.description;\\n            amounts[i] = milestone.amount;\\n            statuses[i] = milestone.status;\\n            submittedAts[i] = milestone.submittedAt;\\n            submissionNotes[i] = milestone.submissionNote;\\n        }\\n\\n        return (descriptions, amounts, statuses, submittedAts, submissionNotes);\\n    }\\n\\n    /**\\n     * @notice Get project statistics\\n     */\\n    function getProjectStats(uint256 projectId) external view returns (\\n        uint256 totalMilestones,\\n        uint256 completedMilestones,\\n        uint256 paidMilestones,\\n        uint256 remainingAmount\\n    ) {\\n        Project storage project = projects[projectId];\\n        uint256 completed = 0;\\n        uint256 paid = 0;\\n\\n        for (uint256 i = 0; i < project.milestones.length; i++) {\\n            MilestoneStatus status = project.milestones[i].status;\\n            if (status == MilestoneStatus.Approved || status == MilestoneStatus.Paid) {\\n                completed++;\\n            }\\n            if (status == MilestoneStatus.Paid) {\\n                paid++;\\n            }\\n        }\\n\\n        return (\\n            project.milestones.length,\\n            completed,\\n            paid,\\n            project.totalAmount - project.totalPaid\\n        );\\n    }\\n}\\n\",\"keccak256\":\"0x5b647059c91b794b180a826a95eab598b0edf8516d33f415852202a3c6335595\",\"license\":\"MIT\"}},\"version\":1}",
+  "bytecode": "0x6080604052348015600f57600080fd5b506001600055612fdd806100246000396000f3fe6080604052600436106101145760003560e01c80636e2a373a116100a0578063e1a4521811610064578063e1a45218146103b7578063f0f3f2c8146103cd578063f326206b146104a0578063f5fce245146104c0578063f7d26c99146104d757600080fd5b80636e2a373a146102f75780638ed9895c14610317578063a0b2389b1461034b578063dbaf09101461037c578063dcfe7b981461039c57600080fd5b80633220d530116100e75780633220d5301461023d57806336fbad261461025d57806349aa9761146102815780635baf7a531461029757806364ca28b5146102b757600080fd5b80630390e07a14610119578063107046bd1461013b57806320913da5146101fd578063249411471461021d575b600080fd5b34801561012557600080fd5b506101396101343660046128be565b6104ea565b005b34801561014757600080fd5b506101ac61015636600461290d565b6002602081905260009182526040909120805460018201549282015460038301546004840154600585015460068601546007909601546001600160a01b0395861697861696959094169492939192909160ff1688565b604080516001600160a01b03998a168152978916602089015295909716948601949094526060850192909252608084015260a083015260c082015290151560e0820152610100015b60405180910390f35b34801561020957600080fd5b50610139610218366004612926565b6106e5565b34801561022957600080fd5b5061013961023836600461290d565b610a68565b34801561024957600080fd5b50610139610258366004612926565b610e06565b34801561026957600080fd5b5061027360015481565b6040519081526020016101f4565b34801561028d57600080fd5b506102736107d081565b3480156102a357600080fd5b506101396102b2366004612926565b610fb2565b3480156102c357600080fd5b506102d76102d236600461290d565b611314565b6040805194855260208501939093529183015260608201526080016101f4565b34801561030357600080fd5b506101396103123660046128be565b61140c565b34801561032357600080fd5b50610337610332366004612926565b6115aa565b6040516101f49897969594939291906129c6565b34801561035757600080fd5b5061036b61036636600461290d565b6117cb565b6040516101f4959493929190612abc565b34801561038857600080fd5b50610139610397366004612926565b611b81565b3480156103a857600080fd5b5061027366038d7ea4c6800081565b3480156103c357600080fd5b5061027361271081565b3480156103d957600080fd5b506104496103e836600461290d565b60009081526002602081905260409091208054600182015492820154600383015460048401546005850154600686015460078701546008909701546001600160a01b0396871699988716989690951696939592949193909260ff9091169190565b604080516001600160a01b039a8b168152988a1660208a015296909816958701959095526060860193909352608085019190915260a084015260c0830152151560e0820152610100810191909152610120016101f4565b3480156104ac57600080fd5b506101396104bb366004612926565b611f30565b3480156104cc57600080fd5b506102736212750081565b6102736104e5366004612c03565b6120d1565b60008381526002602052604090206001015483906001600160a01b0316331461054c5760405162461bcd60e51b815260206004820152600f60248201526e27b7363c90333932b2b630b731b2b960891b60448201526064015b60405180910390fd5b600084815260026020526040902060070154849060ff1661057f5760405162461bcd60e51b815260040161054390612d0e565b6000858152600260205260409020600801548590859081106105b35760405162461bcd60e51b815260040161054390612d3a565b60008781526002602052604081206008018054889081106105d6576105d6612d71565b600091825260209091206006909102019050600160048083015460ff16908111156106035761060361298e565b14806106275750600060048083015460ff16908111156106255761062561298e565b145b61067d5760405162461bcd60e51b815260206004820152602160248201527f43616e6e6f74207375626d69742066726f6d2063757272656e742073746174756044820152607360f81b6064820152608401610543565b60048101805460ff19166002179055426003820155600581016106a08782612e0f565b50877f556e3b296d5e8c8bab27684b52ae96905507befd2d188ce6f4453a6717dd9c0088886040516106d3929190612ecd565b60405180910390a25050505050505050565b6106ed6127df565b60008281526002602052604090205482906001600160a01b031633146107255760405162461bcd60e51b815260040161054390612eee565b600083815260026020526040902060070154839060ff166107585760405162461bcd60e51b815260040161054390612d0e565b60008481526002602052604090206008015484908490811061078c5760405162461bcd60e51b815260040161054390612d3a565b6000868152600260205260408120600881018054919291889081106107b3576107b3612d71565b600091825260209091206006909102019050600260048083015460ff16908111156107e0576107e061298e565b146108275760405162461bcd60e51b8152602060048201526017602482015276135a5b195cdd1bdb99481b9bdd081cdd589b5a5d1d1959604a1b6044820152606401610543565b6000612710836003015483600101546108409190612f29565b61084a9190612f46565b9050600081836001015461085e9190612f68565b6004848101805460ff191690911790556001840154600586018054929350909160009061088c908490612f7b565b92505081905550818460060160008282546108a79190612f7b565b909155505060018401546040516000916001600160a01b03169083908381818185875af1925050503d80600081146108fb576040519150601f19603f3d011682016040523d82523d6000602084013e610900565b606091505b50509050806109515760405162461bcd60e51b815260206004820152601a60248201527f467265656c616e636572207472616e73666572206661696c65640000000000006044820152606401610543565b60028501546001600160a01b03161580159061096d5750600083115b15610a0e5760028501546040516000916001600160a01b03169085908381818185875af1925050503d80600081146109c1576040519150601f19603f3d011682016040523d82523d6000602084013e6109c6565b606091505b5050905080610a0c5760405162461bcd60e51b81526020600482015260126024820152711413481d1c985b9cd9995c8819985a5b195960721b6044820152606401610543565b505b604080518b8152602081018490529081018490528b907f9b9ff2232bef25105f0ccb79a748e9f9d8e01a04485cd0401aa0d1c34b94ba939060600160405180910390a2505050505050505050610a646001600055565b5050565b60008181526002602052604090205481906001600160a01b03163314610aa05760405162461bcd60e51b815260040161054390612eee565b600082815260026020526040902060070154829060ff16610ad35760405162461bcd60e51b815260040161054390612d0e565b610adb6127df565b60008381526002602052604081209080805b6008840154811015610bc0576000846008018281548110610b1057610b10612d71565b600091825260209091206004600690920201015460ff1690506003816004811115610b3d57610b3d61298e565b1480610b5a57506002816004811115610b5857610b5861298e565b145b15610b69576001925050610bc0565b6004816004811115610b7d57610b7d61298e565b14610bb757846008018281548110610b9757610b97612d71565b90600052602060002090600602016001015484610bb49190612f7b565b93505b50600101610aed565b508015610c2b5760405162461bcd60e51b815260206004820152603360248201527f43616e6e6f742063616e63656c207769746820617070726f766564206f72207360448201527275626d6974746564206d696c6573746f6e657360681b6064820152608401610543565b60008211610c705760405162461bcd60e51b8152602060048201526012602482015271139bc8199d5b991cc81d1bc81c99599d5b9960721b6044820152606401610543565b60078301805460ff1916905560005b6008840154811015610d26576004846008018281548110610ca257610ca2612d71565b60009182526020909120600460069092020181015460ff1690811115610cca57610cca61298e565b14610d1e576004846008018281548110610ce657610ce6612d71565b906000526020600020906006020160040160006101000a81548160ff02191690836004811115610d1857610d1861298e565b02179055505b600101610c7f565b5082546040516000916001600160a01b03169084908381818185875af1925050503d8060008114610d73576040519150601f19603f3d011682016040523d82523d6000602084013e610d78565b606091505b5050905080610db95760405162461bcd60e51b815260206004820152600d60248201526c1499599d5b990819985a5b1959609a1b6044820152606401610543565b867f8c47220fd672419577c95c6addc9584af09f9e988ff5d84e437305210b61a4b184604051610deb91815260200190565b60405180910390a250505050610e016001600055565b505050565b60008281526002602052604090206001015482906001600160a01b03163314610e635760405162461bcd60e51b815260206004820152600f60248201526e27b7363c90333932b2b630b731b2b960891b6044820152606401610543565b600083815260026020526040902060070154839060ff16610e965760405162461bcd60e51b815260040161054390612d0e565b600084815260026020526040902060080154849084908110610eca5760405162461bcd60e51b815260040161054390612d3a565b6000868152600260205260408120600801805487908110610eed57610eed612d71565b600091825260208220600690910201915060048083015460ff1690811115610f1757610f1761298e565b14610f645760405162461bcd60e51b815260206004820152601f60248201527f4d696c6573746f6e65206e6f7420696e204372656174656420737461747573006044820152606401610543565b60048101805460ff1916600117905560405186815287907fffcd64ba445305863a00b339c134867e02001032f7b80525bfbcc93fbe282423906020015b60405180910390a250505050505050565b60008281526002602052604090205482906001600160a01b03163314610fea5760405162461bcd60e51b815260040161054390612eee565b600083815260026020526040902060070154839060ff1661101d5760405162461bcd60e51b815260040161054390612d0e565b6000848152600260205260409020600801548490849081106110515760405162461bcd60e51b815260040161054390612d3a565b6110596127df565b60008681526002602052604081206008810180549192918890811061108057611080612d71565b6000918252602090912060069091020190506004808083015460ff16908111156110ac576110ac61298e565b036110e85760405162461bcd60e51b815260206004820152600c60248201526b105b1c9958591e481c185a5960a21b6044820152606401610543565b600360048083015460ff16908111156111035761110361298e565b1415801561112a5750600260048083015460ff16908111156111275761112761298e565b14155b61118d5760405162461bcd60e51b815260206004820152602e60248201527f43616e6e6f74207265636c61696d20617070726f766564206f72207375626d6960448201526d74746564206d696c6573746f6e6560901b6064820152608401610543565b600061119d621275006002612f29565b82600201546111ac9190612f7b565b9050804210156111fe5760405162461bcd60e51b815260206004820152601d60248201527f456d657267656e63792074696d656f7574206e6f7420726561636865640000006044820152606401610543565b6004828101805460ff19169091179055825460018301546040516000926001600160a01b031691908381818185875af1925050503d806000811461125e576040519150601f19603f3d011682016040523d82523d6000602084013e611263565b606091505b50509050806112b45760405162461bcd60e51b815260206004820152601860248201527f456d657267656e6379207265636c61696d206661696c656400000000000000006044820152606401610543565b600180840154604080518c815260208101929092528101919091528a907f72f7fbbb65b9676493891b1db16679b5f18463b98706a57923cf18c1d44604ba9060600160405180910390a25050505061130c6001600055565b505050505050565b60008181526002602052604081208190819081908180805b60088401548110156113dc57600084600801828154811061134f5761134f612d71565b600091825260209091206004600690920201015460ff169050600381600481111561137c5761137c61298e565b1480611399575060048160048111156113975761139761298e565b145b156113ac57836113a881612f8e565b9450505b60048160048111156113c0576113c061298e565b036113d357826113cf81612f8e565b9350505b5060010161132c565b50600883015460058401546004850154849184916113fa9190612f68565b96509650965096505050509193509193565b60008381526002602052604090205483906001600160a01b031633146114445760405162461bcd60e51b815260040161054390612eee565b600084815260026020526040902060070154849060ff166114775760405162461bcd60e51b815260040161054390612d0e565b6000858152600260205260409020600801548590859081106114ab5760405162461bcd60e51b815260040161054390612d3a565b60008781526002602052604081206008018054889081106114ce576114ce612d71565b600091825260209091206006909102019050600260048083015460ff16908111156114fb576114fb61298e565b146115425760405162461bcd60e51b8152602060048201526017602482015276135a5b195cdd1bdb99481b9bdd081cdd589b5a5d1d1959604a1b6044820152606401610543565b60048101805460ff19166001179055600060038201819055604080516020810190915290815260058201906115779082612e0f565b50877f2632a738857d774f3179abee0fa205787aea133c8f6d4cbfe4e605028d3e823088886040516106d3929190612ecd565b606060008060008060606000808989600260008381526020019081526020016000206008018054905081106115f15760405162461bcd60e51b815260040161054390612d3a565b60008c815260026020526040812060080180548d90811061161457611614612d71565b9060005260206000209060060201905060006212750082600201546116399190612f7b565b421015905060008161166657426212750084600201546116599190612f7b565b6116639190612f68565b90505b826000018360010154846002015485600301548660040160009054906101000a900460ff1687600501878787805461169d90612d87565b80601f01602080910402602001604051908101604052809291908181526020018280546116c990612d87565b80156117165780601f106116eb57610100808354040283529160200191611716565b820191906000526020600020905b8154815290600101906020018083116116f957829003601f168201915b5050505050975082805461172990612d87565b80601f016020809104026020016040519081016040528092919081815260200182805461175590612d87565b80156117a25780601f10611777576101008083540402835291602001916117a2565b820191906000526020600020905b81548152906001019060200180831161178557829003601f168201915b505050505092509c509c509c509c509c509c509c509c5050505050509295985092959890939650565b60008181526002602052604090206008810154606091829182918291829190806001600160401b0381111561180257611802612809565b60405190808252806020026020018201604052801561183557816020015b60608152602001906001900390816118205790505b509650806001600160401b0381111561185057611850612809565b604051908082528060200260200182016040528015611879578160200160208202803683370190505b509550806001600160401b0381111561189457611894612809565b6040519080825280602002602001820160405280156118bd578160200160208202803683370190505b509450806001600160401b038111156118d8576118d8612809565b604051908082528060200260200182016040528015611901578160200160208202803683370190505b509350806001600160401b0381111561191c5761191c612809565b60405190808252806020026020018201604052801561194f57816020015b606081526020019060019003908161193a5790505b50925060005b81811015611b7557600083600801828154811061197457611974612d71565b9060005260206000209060060201905080600001805461199390612d87565b80601f01602080910402602001604051908101604052809291908181526020018280546119bf90612d87565b8015611a0c5780601f106119e157610100808354040283529160200191611a0c565b820191906000526020600020905b8154815290600101906020018083116119ef57829003601f168201915b5050505050898381518110611a2357611a23612d71565b60200260200101819052508060010154888381518110611a4557611a45612d71565b60209081029190910101526004810154875160ff90911690889084908110611a6f57611a6f612d71565b60200260200101906004811115611a8857611a8861298e565b90816004811115611a9b57611a9b61298e565b815250508060030154868381518110611ab657611ab6612d71565b602002602001018181525050806005018054611ad190612d87565b80601f0160208091040260200160405190810160405280929190818152602001828054611afd90612d87565b8015611b4a5780601f10611b1f57610100808354040283529160200191611b4a565b820191906000526020600020905b815481529060010190602001808311611b2d57829003601f168201915b5050505050858381518110611b6157611b61612d71565b602090810291909101015250600101611955565b50505091939590929450565b611b896127df565b600082815260026020526040902060080154829082908110611bbd5760405162461bcd60e51b815260040161054390612d3a565b6000848152600260205260409020600781015460ff16611bef5760405162461bcd60e51b815260040161054390612d0e565b6000816008018581548110611c0657611c06612d71565b6000918252602090912060069091020190506004808083015460ff1690811115611c3257611c3261298e565b03611c6e5760405162461bcd60e51b815260206004820152600c60248201526b105b1c9958591e481c185a5960a21b6044820152606401610543565b6000600360048084015460ff1690811115611c8b57611c8b61298e565b1490506000621275008360020154611ca39190612f7b565b421015905060008280611cb35750815b905080611cf95760405162461bcd60e51b81526020600482015260146024820152734e6f7420726561647920746f2072656c6561736560601b6044820152606401610543565b600061271086600301548660010154611d129190612f29565b611d1c9190612f46565b90506000818660010154611d309190612f68565b6004878101805460ff1916909117905560018701546005890180549293509091600090611d5e908490612f7b565b9250508190555081876006016000828254611d799190612f7b565b909155505060018701546040516000916001600160a01b03169083908381818185875af1925050503d8060008114611dcd576040519150601f19603f3d011682016040523d82523d6000602084013e611dd2565b606091505b5050905080611e155760405162461bcd60e51b815260206004820152600f60248201526e151c985b9cd9995c8819985a5b1959608a1b6044820152606401610543565b60028801546001600160a01b031615801590611e315750600083115b15611ed25760028801546040516000916001600160a01b03169085908381818185875af1925050503d8060008114611e85576040519150601f19603f3d011682016040523d82523d6000602084013e611e8a565b606091505b5050905080611ed05760405162461bcd60e51b81526020600482015260126024820152711413481d1c985b9cd9995c8819985a5b195960721b6044820152606401610543565b505b6001870154604080518d81526020810192909252861515908201528c907f72f7fbbb65b9676493891b1db16679b5f18463b98706a57923cf18c1d44604ba9060600160405180910390a250505050505050505050610a646001600055565b60008281526002602052604090205482906001600160a01b03163314611f685760405162461bcd60e51b815260040161054390612eee565b600083815260026020526040902060070154839060ff16611f9b5760405162461bcd60e51b815260040161054390612d0e565b600084815260026020526040902060080154849084908110611fcf5760405162461bcd60e51b815260040161054390612d3a565b6000868152600260205260408120600801805487908110611ff257611ff2612d71565b600091825260209091206006909102019050600360048083015460ff169081111561201f5761201f61298e565b14158015612044575060048181015460ff16818111156120415761204161298e565b14155b6120905760405162461bcd60e51b815260206004820152601960248201527f416c726561647920636f6d706c65746564206f722070616964000000000000006044820152606401610543565b60048101805460ff1916600317905560405186815287907f1b7218c0ac23ea9cbe4df603d2b340fbf469a115b73ea3d11460727f445d6be190602001610fa1565b60006001600160a01b0386166121295760405162461bcd60e51b815260206004820152601a60248201527f496e76616c696420667265656c616e63657220616464726573730000000000006044820152606401610543565b336001600160a01b038716036121815760405162461bcd60e51b815260206004820152601b60248201527f436c69656e742063616e6e6f7420626520667265656c616e63657200000000006044820152606401610543565b81518351146121ca5760405162461bcd60e51b8152602060048201526015602482015274082e4e4c2f240d8cadccee8d040dad2e6dac2e8c6d605b1b6044820152606401610543565b600083511161221b5760405162461bcd60e51b815260206004820152601b60248201527f4e656564206174206c65617374206f6e65206d696c6573746f6e6500000000006044820152606401610543565b6032835111156122635760405162461bcd60e51b8152602060048201526013602482015272546f6f206d616e79206d696c6573746f6e657360681b6044820152606401610543565b6107d08411156122a75760405162461bcd60e51b815260206004820152600f60248201526e0a09a40cccaca40e8dede40d0d2ced608b1b6044820152606401610543565b6001600160a01b0385161561236a57336001600160a01b038616036123045760405162461bcd60e51b8152602060048201526013602482015272436c69656e742063616e6e6f7420626520504d60681b6044820152606401610543565b856001600160a01b0316856001600160a01b0316036123655760405162461bcd60e51b815260206004820152601760248201527f467265656c616e6365722063616e6e6f7420626520504d0000000000000000006044820152606401610543565b6123b8565b83156123b85760405162461bcd60e51b815260206004820152601960248201527f43616e6e6f74207365742066656520776974686f757420504d000000000000006044820152606401610543565b6000805b835181101561251b5766038d7ea4c680008482815181106123df576123df612d71565b602002602001015110156124285760405162461bcd60e51b815260206004820152601060248201526f105b5bdd5b9d081d1bdbc81cdb585b1b60821b6044820152606401610543565b600085828151811061243c5761243c612d71565b602002602001015151116124895760405162461bcd60e51b815260206004820152601460248201527311195cd8dc9a5c1d1a5bdb881c995c5d5a5c995960621b6044820152606401610543565b6101f485828151811061249e5761249e612d71565b60200260200101515111156124ec5760405162461bcd60e51b81526020600482015260146024820152734465736372697074696f6e20746f6f206c6f6e6760601b6044820152606401610543565b8381815181106124fe576124fe612d71565b6020026020010151826125119190612f7b565b91506001016123bc565b5080341461256b5760405162461bcd60e51b815260206004820152601860248201527f496e636f7272656374207061796d656e7420616d6f756e7400000000000000006044820152606401610543565b600180546000918261257c83612f8e565b9190505590506000600260008381526020019081526020016000209050338160000160006101000a8154816001600160a01b0302191690836001600160a01b03160217905550888160010160006101000a8154816001600160a01b0302191690836001600160a01b03160217905550878160020160006101000a8154816001600160a01b0302191690836001600160a01b03160217905550868160030181905550828160040181905550600081600501819055506000816006018190555060018160070160006101000a81548160ff02191690831515021790555060005b865181101561277657816008016040518060c0016040528089848151811061268457612684612d71565b602002602001015181526020018884815181106126a3576126a3612d71565b6020026020010151815260200142815260200160008152602001600060048111156126d0576126d061298e565b81526040805160208181019092526000808252928201528354600181018555938252902081519192600602019081906127099082612e0f565b5060208201518160010155604082015181600201556060820151816003015560808201518160040160006101000a81548160ff021916908360048111156127525761275261298e565b021790555060a0820151600582019061276b9082612e0f565b50505060010161265a565b508551604080516001600160a01b038b81168252602082018b905291810186905260608101929092528a1690339084907f852c79bfb79c4c0d08020cc0c74f221555e5cd29ca569e47903e4ff3704686de9060800160405180910390a450979650505050505050565b60026000540361280257604051633ee5aeb560e01b815260040160405180910390fd5b6002600055565b634e487b7160e01b600052604160045260246000fd5b604051601f8201601f191681016001600160401b038111828210171561284757612847612809565b604052919050565b600082601f83011261286057600080fd5b81356001600160401b0381111561287957612879612809565b61288c601f8201601f191660200161281f565b8181528460208386010111156128a157600080fd5b816020850160208301376000918101602001919091529392505050565b6000806000606084860312156128d357600080fd5b833592506020840135915060408401356001600160401b038111156128f757600080fd5b6129038682870161284f565b9150509250925092565b60006020828403121561291f57600080fd5b5035919050565b6000806040838503121561293957600080fd5b50508035926020909101359150565b6000815180845260005b8181101561296e57602081850181015186830182015201612952565b506000602082860101526020601f19601f83011685010191505092915050565b634e487b7160e01b600052602160045260246000fd5b600581106129c257634e487b7160e01b600052602160045260246000fd5b9052565b610100815260006129db61010083018b612948565b8960208401528860408401528760608401526129fa60808401886129a4565b82810360a0840152612a0c8187612948565b94151560c0840152505060e001529695505050505050565b600082825180855260208501945060208160051b8301016020850160005b83811015612a7457601f19858403018852612a5e838351612948565b6020988901989093509190910190600101612a42565b50909695505050505050565b600081518084526020840193506020830160005b82811015612ab2578151865260209586019590910190600101612a94565b5093949350505050565b60a081526000612acf60a0830188612a24565b8281036020840152612ae18188612a80565b83810360408501528651808252602080890193509091019060005b81811015612b2257612b0f8385516129a4565b6020938401939290920191600101612afc565b50508381036060850152612b368187612a80565b9150508281036080840152612b4b8185612a24565b98975050505050505050565b80356001600160a01b0381168114612b6e57600080fd5b919050565b60006001600160401b03821115612b8c57612b8c612809565b5060051b60200190565b600082601f830112612ba757600080fd5b8135612bba612bb582612b73565b61281f565b8082825260208201915060208360051b860101925085831115612bdc57600080fd5b602085015b83811015612bf9578035835260209283019201612be1565b5095945050505050565b600080600080600060a08688031215612c1b57600080fd5b612c2486612b57565b9450612c3260208701612b57565b93506040860135925060608601356001600160401b03811115612c5457600080fd5b8601601f81018813612c6557600080fd5b8035612c73612bb582612b73565b8082825260208201915060208360051b85010192508a831115612c9557600080fd5b602084015b83811015612cd65780356001600160401b03811115612cb857600080fd5b612cc78d60208389010161284f565b84525060209283019201612c9a565b50945050505060808601356001600160401b03811115612cf557600080fd5b612d0188828901612b96565b9150509295509295909350565b60208082526012908201527150726f6a656374206e6f742061637469766560701b604082015260600190565b60208082526017908201527f496e76616c6964206d696c6573746f6e6520696e646578000000000000000000604082015260600190565b634e487b7160e01b600052603260045260246000fd5b600181811c90821680612d9b57607f821691505b602082108103612dbb57634e487b7160e01b600052602260045260246000fd5b50919050565b601f821115610e0157806000526020600020601f840160051c81016020851015612de85750805b601f840160051c820191505b81811015612e085760008155600101612df4565b5050505050565b81516001600160401b03811115612e2857612e28612809565b612e3c81612e368454612d87565b84612dc1565b6020601f821160018114612e705760008315612e585750848201515b600019600385901b1c1916600184901b178455612e08565b600084815260208120601f198516915b82811015612ea05787850151825560209485019460019092019101612e80565b5084821015612ebe5786840151600019600387901b60f8161c191681555b50505050600190811b01905550565b828152604060208201526000612ee66040830184612948565b949350505050565b6020808252600b908201526a13db9b1e4818db1a595b9d60aa1b604082015260600190565b634e487b7160e01b600052601160045260246000fd5b8082028115828204841417612f4057612f40612f13565b92915050565b600082612f6357634e487b7160e01b600052601260045260246000fd5b500490565b81810381811115612f4057612f40612f13565b80820180821115612f4057612f40612f13565b600060018201612fa057612fa0612f13565b506001019056fea2646970667358221220f475dbdb234ddc27619616046ce71d3e447a2af6586b8db3ce302efebf8ade9f64736f6c634300081e0033",
+  "deployedBytecode": "0x6080604052600436106101145760003560e01c80636e2a373a116100a0578063e1a4521811610064578063e1a45218146103b7578063f0f3f2c8146103cd578063f326206b146104a0578063f5fce245146104c0578063f7d26c99146104d757600080fd5b80636e2a373a146102f75780638ed9895c14610317578063a0b2389b1461034b578063dbaf09101461037c578063dcfe7b981461039c57600080fd5b80633220d530116100e75780633220d5301461023d57806336fbad261461025d57806349aa9761146102815780635baf7a531461029757806364ca28b5146102b757600080fd5b80630390e07a14610119578063107046bd1461013b57806320913da5146101fd578063249411471461021d575b600080fd5b34801561012557600080fd5b506101396101343660046128be565b6104ea565b005b34801561014757600080fd5b506101ac61015636600461290d565b6002602081905260009182526040909120805460018201549282015460038301546004840154600585015460068601546007909601546001600160a01b0395861697861696959094169492939192909160ff1688565b604080516001600160a01b03998a168152978916602089015295909716948601949094526060850192909252608084015260a083015260c082015290151560e0820152610100015b60405180910390f35b34801561020957600080fd5b50610139610218366004612926565b6106e5565b34801561022957600080fd5b5061013961023836600461290d565b610a68565b34801561024957600080fd5b50610139610258366004612926565b610e06565b34801561026957600080fd5b5061027360015481565b6040519081526020016101f4565b34801561028d57600080fd5b506102736107d081565b3480156102a357600080fd5b506101396102b2366004612926565b610fb2565b3480156102c357600080fd5b506102d76102d236600461290d565b611314565b6040805194855260208501939093529183015260608201526080016101f4565b34801561030357600080fd5b506101396103123660046128be565b61140c565b34801561032357600080fd5b50610337610332366004612926565b6115aa565b6040516101f49897969594939291906129c6565b34801561035757600080fd5b5061036b61036636600461290d565b6117cb565b6040516101f4959493929190612abc565b34801561038857600080fd5b50610139610397366004612926565b611b81565b3480156103a857600080fd5b5061027366038d7ea4c6800081565b3480156103c357600080fd5b5061027361271081565b3480156103d957600080fd5b506104496103e836600461290d565b60009081526002602081905260409091208054600182015492820154600383015460048401546005850154600686015460078701546008909701546001600160a01b0396871699988716989690951696939592949193909260ff9091169190565b604080516001600160a01b039a8b168152988a1660208a015296909816958701959095526060860193909352608085019190915260a084015260c0830152151560e0820152610100810191909152610120016101f4565b3480156104ac57600080fd5b506101396104bb366004612926565b611f30565b3480156104cc57600080fd5b506102736212750081565b6102736104e5366004612c03565b6120d1565b60008381526002602052604090206001015483906001600160a01b0316331461054c5760405162461bcd60e51b815260206004820152600f60248201526e27b7363c90333932b2b630b731b2b960891b60448201526064015b60405180910390fd5b600084815260026020526040902060070154849060ff1661057f5760405162461bcd60e51b815260040161054390612d0e565b6000858152600260205260409020600801548590859081106105b35760405162461bcd60e51b815260040161054390612d3a565b60008781526002602052604081206008018054889081106105d6576105d6612d71565b600091825260209091206006909102019050600160048083015460ff16908111156106035761060361298e565b14806106275750600060048083015460ff16908111156106255761062561298e565b145b61067d5760405162461bcd60e51b815260206004820152602160248201527f43616e6e6f74207375626d69742066726f6d2063757272656e742073746174756044820152607360f81b6064820152608401610543565b60048101805460ff19166002179055426003820155600581016106a08782612e0f565b50877f556e3b296d5e8c8bab27684b52ae96905507befd2d188ce6f4453a6717dd9c0088886040516106d3929190612ecd565b60405180910390a25050505050505050565b6106ed6127df565b60008281526002602052604090205482906001600160a01b031633146107255760405162461bcd60e51b815260040161054390612eee565b600083815260026020526040902060070154839060ff166107585760405162461bcd60e51b815260040161054390612d0e565b60008481526002602052604090206008015484908490811061078c5760405162461bcd60e51b815260040161054390612d3a565b6000868152600260205260408120600881018054919291889081106107b3576107b3612d71565b600091825260209091206006909102019050600260048083015460ff16908111156107e0576107e061298e565b146108275760405162461bcd60e51b8152602060048201526017602482015276135a5b195cdd1bdb99481b9bdd081cdd589b5a5d1d1959604a1b6044820152606401610543565b6000612710836003015483600101546108409190612f29565b61084a9190612f46565b9050600081836001015461085e9190612f68565b6004848101805460ff191690911790556001840154600586018054929350909160009061088c908490612f7b565b92505081905550818460060160008282546108a79190612f7b565b909155505060018401546040516000916001600160a01b03169083908381818185875af1925050503d80600081146108fb576040519150601f19603f3d011682016040523d82523d6000602084013e610900565b606091505b50509050806109515760405162461bcd60e51b815260206004820152601a60248201527f467265656c616e636572207472616e73666572206661696c65640000000000006044820152606401610543565b60028501546001600160a01b03161580159061096d5750600083115b15610a0e5760028501546040516000916001600160a01b03169085908381818185875af1925050503d80600081146109c1576040519150601f19603f3d011682016040523d82523d6000602084013e6109c6565b606091505b5050905080610a0c5760405162461bcd60e51b81526020600482015260126024820152711413481d1c985b9cd9995c8819985a5b195960721b6044820152606401610543565b505b604080518b8152602081018490529081018490528b907f9b9ff2232bef25105f0ccb79a748e9f9d8e01a04485cd0401aa0d1c34b94ba939060600160405180910390a2505050505050505050610a646001600055565b5050565b60008181526002602052604090205481906001600160a01b03163314610aa05760405162461bcd60e51b815260040161054390612eee565b600082815260026020526040902060070154829060ff16610ad35760405162461bcd60e51b815260040161054390612d0e565b610adb6127df565b60008381526002602052604081209080805b6008840154811015610bc0576000846008018281548110610b1057610b10612d71565b600091825260209091206004600690920201015460ff1690506003816004811115610b3d57610b3d61298e565b1480610b5a57506002816004811115610b5857610b5861298e565b145b15610b69576001925050610bc0565b6004816004811115610b7d57610b7d61298e565b14610bb757846008018281548110610b9757610b97612d71565b90600052602060002090600602016001015484610bb49190612f7b565b93505b50600101610aed565b508015610c2b5760405162461bcd60e51b815260206004820152603360248201527f43616e6e6f742063616e63656c207769746820617070726f766564206f72207360448201527275626d6974746564206d696c6573746f6e657360681b6064820152608401610543565b60008211610c705760405162461bcd60e51b8152602060048201526012602482015271139bc8199d5b991cc81d1bc81c99599d5b9960721b6044820152606401610543565b60078301805460ff1916905560005b6008840154811015610d26576004846008018281548110610ca257610ca2612d71565b60009182526020909120600460069092020181015460ff1690811115610cca57610cca61298e565b14610d1e576004846008018281548110610ce657610ce6612d71565b906000526020600020906006020160040160006101000a81548160ff02191690836004811115610d1857610d1861298e565b02179055505b600101610c7f565b5082546040516000916001600160a01b03169084908381818185875af1925050503d8060008114610d73576040519150601f19603f3d011682016040523d82523d6000602084013e610d78565b606091505b5050905080610db95760405162461bcd60e51b815260206004820152600d60248201526c1499599d5b990819985a5b1959609a1b6044820152606401610543565b867f8c47220fd672419577c95c6addc9584af09f9e988ff5d84e437305210b61a4b184604051610deb91815260200190565b60405180910390a250505050610e016001600055565b505050565b60008281526002602052604090206001015482906001600160a01b03163314610e635760405162461bcd60e51b815260206004820152600f60248201526e27b7363c90333932b2b630b731b2b960891b6044820152606401610543565b600083815260026020526040902060070154839060ff16610e965760405162461bcd60e51b815260040161054390612d0e565b600084815260026020526040902060080154849084908110610eca5760405162461bcd60e51b815260040161054390612d3a565b6000868152600260205260408120600801805487908110610eed57610eed612d71565b600091825260208220600690910201915060048083015460ff1690811115610f1757610f1761298e565b14610f645760405162461bcd60e51b815260206004820152601f60248201527f4d696c6573746f6e65206e6f7420696e204372656174656420737461747573006044820152606401610543565b60048101805460ff1916600117905560405186815287907fffcd64ba445305863a00b339c134867e02001032f7b80525bfbcc93fbe282423906020015b60405180910390a250505050505050565b60008281526002602052604090205482906001600160a01b03163314610fea5760405162461bcd60e51b815260040161054390612eee565b600083815260026020526040902060070154839060ff1661101d5760405162461bcd60e51b815260040161054390612d0e565b6000848152600260205260409020600801548490849081106110515760405162461bcd60e51b815260040161054390612d3a565b6110596127df565b60008681526002602052604081206008810180549192918890811061108057611080612d71565b6000918252602090912060069091020190506004808083015460ff16908111156110ac576110ac61298e565b036110e85760405162461bcd60e51b815260206004820152600c60248201526b105b1c9958591e481c185a5960a21b6044820152606401610543565b600360048083015460ff16908111156111035761110361298e565b1415801561112a5750600260048083015460ff16908111156111275761112761298e565b14155b61118d5760405162461bcd60e51b815260206004820152602e60248201527f43616e6e6f74207265636c61696d20617070726f766564206f72207375626d6960448201526d74746564206d696c6573746f6e6560901b6064820152608401610543565b600061119d621275006002612f29565b82600201546111ac9190612f7b565b9050804210156111fe5760405162461bcd60e51b815260206004820152601d60248201527f456d657267656e63792074696d656f7574206e6f7420726561636865640000006044820152606401610543565b6004828101805460ff19169091179055825460018301546040516000926001600160a01b031691908381818185875af1925050503d806000811461125e576040519150601f19603f3d011682016040523d82523d6000602084013e611263565b606091505b50509050806112b45760405162461bcd60e51b815260206004820152601860248201527f456d657267656e6379207265636c61696d206661696c656400000000000000006044820152606401610543565b600180840154604080518c815260208101929092528101919091528a907f72f7fbbb65b9676493891b1db16679b5f18463b98706a57923cf18c1d44604ba9060600160405180910390a25050505061130c6001600055565b505050505050565b60008181526002602052604081208190819081908180805b60088401548110156113dc57600084600801828154811061134f5761134f612d71565b600091825260209091206004600690920201015460ff169050600381600481111561137c5761137c61298e565b1480611399575060048160048111156113975761139761298e565b145b156113ac57836113a881612f8e565b9450505b60048160048111156113c0576113c061298e565b036113d357826113cf81612f8e565b9350505b5060010161132c565b50600883015460058401546004850154849184916113fa9190612f68565b96509650965096505050509193509193565b60008381526002602052604090205483906001600160a01b031633146114445760405162461bcd60e51b815260040161054390612eee565b600084815260026020526040902060070154849060ff166114775760405162461bcd60e51b815260040161054390612d0e565b6000858152600260205260409020600801548590859081106114ab5760405162461bcd60e51b815260040161054390612d3a565b60008781526002602052604081206008018054889081106114ce576114ce612d71565b600091825260209091206006909102019050600260048083015460ff16908111156114fb576114fb61298e565b146115425760405162461bcd60e51b8152602060048201526017602482015276135a5b195cdd1bdb99481b9bdd081cdd589b5a5d1d1959604a1b6044820152606401610543565b60048101805460ff19166001179055600060038201819055604080516020810190915290815260058201906115779082612e0f565b50877f2632a738857d774f3179abee0fa205787aea133c8f6d4cbfe4e605028d3e823088886040516106d3929190612ecd565b606060008060008060606000808989600260008381526020019081526020016000206008018054905081106115f15760405162461bcd60e51b815260040161054390612d3a565b60008c815260026020526040812060080180548d90811061161457611614612d71565b9060005260206000209060060201905060006212750082600201546116399190612f7b565b421015905060008161166657426212750084600201546116599190612f7b565b6116639190612f68565b90505b826000018360010154846002015485600301548660040160009054906101000a900460ff1687600501878787805461169d90612d87565b80601f01602080910402602001604051908101604052809291908181526020018280546116c990612d87565b80156117165780601f106116eb57610100808354040283529160200191611716565b820191906000526020600020905b8154815290600101906020018083116116f957829003601f168201915b5050505050975082805461172990612d87565b80601f016020809104026020016040519081016040528092919081815260200182805461175590612d87565b80156117a25780601f10611777576101008083540402835291602001916117a2565b820191906000526020600020905b81548152906001019060200180831161178557829003601f168201915b505050505092509c509c509c509c509c509c509c509c5050505050509295985092959890939650565b60008181526002602052604090206008810154606091829182918291829190806001600160401b0381111561180257611802612809565b60405190808252806020026020018201604052801561183557816020015b60608152602001906001900390816118205790505b509650806001600160401b0381111561185057611850612809565b604051908082528060200260200182016040528015611879578160200160208202803683370190505b509550806001600160401b0381111561189457611894612809565b6040519080825280602002602001820160405280156118bd578160200160208202803683370190505b509450806001600160401b038111156118d8576118d8612809565b604051908082528060200260200182016040528015611901578160200160208202803683370190505b509350806001600160401b0381111561191c5761191c612809565b60405190808252806020026020018201604052801561194f57816020015b606081526020019060019003908161193a5790505b50925060005b81811015611b7557600083600801828154811061197457611974612d71565b9060005260206000209060060201905080600001805461199390612d87565b80601f01602080910402602001604051908101604052809291908181526020018280546119bf90612d87565b8015611a0c5780601f106119e157610100808354040283529160200191611a0c565b820191906000526020600020905b8154815290600101906020018083116119ef57829003601f168201915b5050505050898381518110611a2357611a23612d71565b60200260200101819052508060010154888381518110611a4557611a45612d71565b60209081029190910101526004810154875160ff90911690889084908110611a6f57611a6f612d71565b60200260200101906004811115611a8857611a8861298e565b90816004811115611a9b57611a9b61298e565b815250508060030154868381518110611ab657611ab6612d71565b602002602001018181525050806005018054611ad190612d87565b80601f0160208091040260200160405190810160405280929190818152602001828054611afd90612d87565b8015611b4a5780601f10611b1f57610100808354040283529160200191611b4a565b820191906000526020600020905b815481529060010190602001808311611b2d57829003601f168201915b5050505050858381518110611b6157611b61612d71565b602090810291909101015250600101611955565b50505091939590929450565b611b896127df565b600082815260026020526040902060080154829082908110611bbd5760405162461bcd60e51b815260040161054390612d3a565b6000848152600260205260409020600781015460ff16611bef5760405162461bcd60e51b815260040161054390612d0e565b6000816008018581548110611c0657611c06612d71565b6000918252602090912060069091020190506004808083015460ff1690811115611c3257611c3261298e565b03611c6e5760405162461bcd60e51b815260206004820152600c60248201526b105b1c9958591e481c185a5960a21b6044820152606401610543565b6000600360048084015460ff1690811115611c8b57611c8b61298e565b1490506000621275008360020154611ca39190612f7b565b421015905060008280611cb35750815b905080611cf95760405162461bcd60e51b81526020600482015260146024820152734e6f7420726561647920746f2072656c6561736560601b6044820152606401610543565b600061271086600301548660010154611d129190612f29565b611d1c9190612f46565b90506000818660010154611d309190612f68565b6004878101805460ff1916909117905560018701546005890180549293509091600090611d5e908490612f7b565b9250508190555081876006016000828254611d799190612f7b565b909155505060018701546040516000916001600160a01b03169083908381818185875af1925050503d8060008114611dcd576040519150601f19603f3d011682016040523d82523d6000602084013e611dd2565b606091505b5050905080611e155760405162461bcd60e51b815260206004820152600f60248201526e151c985b9cd9995c8819985a5b1959608a1b6044820152606401610543565b60028801546001600160a01b031615801590611e315750600083115b15611ed25760028801546040516000916001600160a01b03169085908381818185875af1925050503d8060008114611e85576040519150601f19603f3d011682016040523d82523d6000602084013e611e8a565b606091505b5050905080611ed05760405162461bcd60e51b81526020600482015260126024820152711413481d1c985b9cd9995c8819985a5b195960721b6044820152606401610543565b505b6001870154604080518d81526020810192909252861515908201528c907f72f7fbbb65b9676493891b1db16679b5f18463b98706a57923cf18c1d44604ba9060600160405180910390a250505050505050505050610a646001600055565b60008281526002602052604090205482906001600160a01b03163314611f685760405162461bcd60e51b815260040161054390612eee565b600083815260026020526040902060070154839060ff16611f9b5760405162461bcd60e51b815260040161054390612d0e565b600084815260026020526040902060080154849084908110611fcf5760405162461bcd60e51b815260040161054390612d3a565b6000868152600260205260408120600801805487908110611ff257611ff2612d71565b600091825260209091206006909102019050600360048083015460ff169081111561201f5761201f61298e565b14158015612044575060048181015460ff16818111156120415761204161298e565b14155b6120905760405162461bcd60e51b815260206004820152601960248201527f416c726561647920636f6d706c65746564206f722070616964000000000000006044820152606401610543565b60048101805460ff1916600317905560405186815287907f1b7218c0ac23ea9cbe4df603d2b340fbf469a115b73ea3d11460727f445d6be190602001610fa1565b60006001600160a01b0386166121295760405162461bcd60e51b815260206004820152601a60248201527f496e76616c696420667265656c616e63657220616464726573730000000000006044820152606401610543565b336001600160a01b038716036121815760405162461bcd60e51b815260206004820152601b60248201527f436c69656e742063616e6e6f7420626520667265656c616e63657200000000006044820152606401610543565b81518351146121ca5760405162461bcd60e51b8152602060048201526015602482015274082e4e4c2f240d8cadccee8d040dad2e6dac2e8c6d605b1b6044820152606401610543565b600083511161221b5760405162461bcd60e51b815260206004820152601b60248201527f4e656564206174206c65617374206f6e65206d696c6573746f6e6500000000006044820152606401610543565b6032835111156122635760405162461bcd60e51b8152602060048201526013602482015272546f6f206d616e79206d696c6573746f6e657360681b6044820152606401610543565b6107d08411156122a75760405162461bcd60e51b815260206004820152600f60248201526e0a09a40cccaca40e8dede40d0d2ced608b1b6044820152606401610543565b6001600160a01b0385161561236a57336001600160a01b038616036123045760405162461bcd60e51b8152602060048201526013602482015272436c69656e742063616e6e6f7420626520504d60681b6044820152606401610543565b856001600160a01b0316856001600160a01b0316036123655760405162461bcd60e51b815260206004820152601760248201527f467265656c616e6365722063616e6e6f7420626520504d0000000000000000006044820152606401610543565b6123b8565b83156123b85760405162461bcd60e51b815260206004820152601960248201527f43616e6e6f74207365742066656520776974686f757420504d000000000000006044820152606401610543565b6000805b835181101561251b5766038d7ea4c680008482815181106123df576123df612d71565b602002602001015110156124285760405162461bcd60e51b815260206004820152601060248201526f105b5bdd5b9d081d1bdbc81cdb585b1b60821b6044820152606401610543565b600085828151811061243c5761243c612d71565b602002602001015151116124895760405162461bcd60e51b815260206004820152601460248201527311195cd8dc9a5c1d1a5bdb881c995c5d5a5c995960621b6044820152606401610543565b6101f485828151811061249e5761249e612d71565b60200260200101515111156124ec5760405162461bcd60e51b81526020600482015260146024820152734465736372697074696f6e20746f6f206c6f6e6760601b6044820152606401610543565b8381815181106124fe576124fe612d71565b6020026020010151826125119190612f7b565b91506001016123bc565b5080341461256b5760405162461bcd60e51b815260206004820152601860248201527f496e636f7272656374207061796d656e7420616d6f756e7400000000000000006044820152606401610543565b600180546000918261257c83612f8e565b9190505590506000600260008381526020019081526020016000209050338160000160006101000a8154816001600160a01b0302191690836001600160a01b03160217905550888160010160006101000a8154816001600160a01b0302191690836001600160a01b03160217905550878160020160006101000a8154816001600160a01b0302191690836001600160a01b03160217905550868160030181905550828160040181905550600081600501819055506000816006018190555060018160070160006101000a81548160ff02191690831515021790555060005b865181101561277657816008016040518060c0016040528089848151811061268457612684612d71565b602002602001015181526020018884815181106126a3576126a3612d71565b6020026020010151815260200142815260200160008152602001600060048111156126d0576126d061298e565b81526040805160208181019092526000808252928201528354600181018555938252902081519192600602019081906127099082612e0f565b5060208201518160010155604082015181600201556060820151816003015560808201518160040160006101000a81548160ff021916908360048111156127525761275261298e565b021790555060a0820151600582019061276b9082612e0f565b50505060010161265a565b508551604080516001600160a01b038b81168252602082018b905291810186905260608101929092528a1690339084907f852c79bfb79c4c0d08020cc0c74f221555e5cd29ca569e47903e4ff3704686de9060800160405180910390a450979650505050505050565b60026000540361280257604051633ee5aeb560e01b815260040160405180910390fd5b6002600055565b634e487b7160e01b600052604160045260246000fd5b604051601f8201601f191681016001600160401b038111828210171561284757612847612809565b604052919050565b600082601f83011261286057600080fd5b81356001600160401b0381111561287957612879612809565b61288c601f8201601f191660200161281f565b8181528460208386010111156128a157600080fd5b816020850160208301376000918101602001919091529392505050565b6000806000606084860312156128d357600080fd5b833592506020840135915060408401356001600160401b038111156128f757600080fd5b6129038682870161284f565b9150509250925092565b60006020828403121561291f57600080fd5b5035919050565b6000806040838503121561293957600080fd5b50508035926020909101359150565b6000815180845260005b8181101561296e57602081850181015186830182015201612952565b506000602082860101526020601f19601f83011685010191505092915050565b634e487b7160e01b600052602160045260246000fd5b600581106129c257634e487b7160e01b600052602160045260246000fd5b9052565b610100815260006129db61010083018b612948565b8960208401528860408401528760608401526129fa60808401886129a4565b82810360a0840152612a0c8187612948565b94151560c0840152505060e001529695505050505050565b600082825180855260208501945060208160051b8301016020850160005b83811015612a7457601f19858403018852612a5e838351612948565b6020988901989093509190910190600101612a42565b50909695505050505050565b600081518084526020840193506020830160005b82811015612ab2578151865260209586019590910190600101612a94565b5093949350505050565b60a081526000612acf60a0830188612a24565b8281036020840152612ae18188612a80565b83810360408501528651808252602080890193509091019060005b81811015612b2257612b0f8385516129a4565b6020938401939290920191600101612afc565b50508381036060850152612b368187612a80565b9150508281036080840152612b4b8185612a24565b98975050505050505050565b80356001600160a01b0381168114612b6e57600080fd5b919050565b60006001600160401b03821115612b8c57612b8c612809565b5060051b60200190565b600082601f830112612ba757600080fd5b8135612bba612bb582612b73565b61281f565b8082825260208201915060208360051b860101925085831115612bdc57600080fd5b602085015b83811015612bf9578035835260209283019201612be1565b5095945050505050565b600080600080600060a08688031215612c1b57600080fd5b612c2486612b57565b9450612c3260208701612b57565b93506040860135925060608601356001600160401b03811115612c5457600080fd5b8601601f81018813612c6557600080fd5b8035612c73612bb582612b73565b8082825260208201915060208360051b85010192508a831115612c9557600080fd5b602084015b83811015612cd65780356001600160401b03811115612cb857600080fd5b612cc78d60208389010161284f565b84525060209283019201612c9a565b50945050505060808601356001600160401b03811115612cf557600080fd5b612d0188828901612b96565b9150509295509295909350565b60208082526012908201527150726f6a656374206e6f742061637469766560701b604082015260600190565b60208082526017908201527f496e76616c6964206d696c6573746f6e6520696e646578000000000000000000604082015260600190565b634e487b7160e01b600052603260045260246000fd5b600181811c90821680612d9b57607f821691505b602082108103612dbb57634e487b7160e01b600052602260045260246000fd5b50919050565b601f821115610e0157806000526020600020601f840160051c81016020851015612de85750805b601f840160051c820191505b81811015612e085760008155600101612df4565b5050505050565b81516001600160401b03811115612e2857612e28612809565b612e3c81612e368454612d87565b84612dc1565b6020601f821160018114612e705760008315612e585750848201515b600019600385901b1c1916600184901b178455612e08565b600084815260208120601f198516915b82811015612ea05787850151825560209485019460019092019101612e80565b5084821015612ebe5786840151600019600387901b60f8161c191681555b50505050600190811b01905550565b828152604060208201526000612ee66040830184612948565b949350505050565b6020808252600b908201526a13db9b1e4818db1a595b9d60aa1b604082015260600190565b634e487b7160e01b600052601160045260246000fd5b8082028115828204841417612f4057612f40612f13565b92915050565b600082612f6357634e487b7160e01b600052601260045260246000fd5b500490565b81810381811115612f4057612f40612f13565b80820180821115612f4057612f40612f13565b600060018201612fa057612fa0612f13565b506001019056fea2646970667358221220f475dbdb234ddc27619616046ce71d3e447a2af6586b8db3ce302efebf8ade9f64736f6c634300081e0033",
+  "devdoc": {
+    "details": "Enhanced version with status state machine, PM fees, and role-based actions",
+    "errors": {
+      "ReentrancyGuardReentrantCall()": [
+        {
+          "details": "Unauthorized reentrant call."
+        }
+      ]
+    },
+    "kind": "dev",
+    "methods": {
+      "approveMilestone(uint256,uint256)": {
+        "params": {
+          "milestoneIndex": "Index of the milestone",
+          "projectId": "The project ID"
+        }
+      },
+      "cancelProject(uint256)": {
+        "details": "Can only be called by client for projects with no approved/submitted milestones",
+        "params": {
+          "projectId": "The project ID"
+        }
+      },
+      "completeMilestone(uint256,uint256)": {
+        "details": "Equivalent to approve for backwards compatibility",
+        "params": {
+          "milestoneIndex": "Index of the milestone",
+          "projectId": "The project ID"
+        }
+      },
+      "createProject(address,address,uint256,string[],uint256[])": {
+        "params": {
+          "amounts": "Array of milestone amounts (in wei)",
+          "descriptions": "Array of milestone descriptions",
+          "freelancer": "Address of the freelancer",
+          "pm": "Address of the project manager (can be address(0) for no PM)",
+          "pmFeeBps": "PM fee in basis points (0-2000, i.e., 0-20%)"
+        }
+      },
+      "emergencyReclaim(uint256,uint256)": {
+        "details": "Client can reclaim funds from a milestone that cannot be paid",
+        "params": {
+          "milestoneIndex": "Index of the milestone",
+          "projectId": "The project ID"
+        }
+      },
+      "getAllMilestones(uint256)": {
+        "details": "Returns arrays of milestone data for easier frontend consumption"
+      },
+      "rejectMilestone(uint256,uint256,string)": {
+        "params": {
+          "milestoneIndex": "Index of the milestone",
+          "projectId": "The project ID",
+          "reason": "Reason for rejection"
+        }
+      },
+      "releaseMilestone(uint256,uint256)": {
+        "details": "Can be called by anyone, but requires milestone to be completed/approved or timed out",
+        "params": {
+          "milestoneIndex": "Index of the milestone",
+          "projectId": "The project ID"
+        }
+      },
+      "startMilestone(uint256,uint256)": {
+        "params": {
+          "milestoneIndex": "Index of the milestone",
+          "projectId": "The project ID"
+        }
+      },
+      "submitMilestone(uint256,uint256,string)": {
+        "params": {
+          "milestoneIndex": "Index of the milestone",
+          "note": "Submission note describing deliverables",
+          "projectId": "The project ID"
+        }
+      }
+    },
+    "title": "MilestoneEscrow",
+    "version": 1
+  },
+  "userdoc": {
+    "kind": "user",
+    "methods": {
+      "approveMilestone(uint256,uint256)": {
+        "notice": "Client approves a milestone and triggers payment"
+      },
+      "cancelProject(uint256)": {
+        "notice": "Cancel project and refund unpaid milestones to client"
+      },
+      "completeMilestone(uint256,uint256)": {
+        "notice": "Client marks milestone as completed (legacy support)"
+      },
+      "createProject(address,address,uint256,string[],uint256[])": {
+        "notice": "Create new project with milestones and optional PM"
+      },
+      "emergencyReclaim(uint256,uint256)": {
+        "notice": "Emergency withdrawal for specific milestone"
+      },
+      "getAllMilestones(uint256)": {
+        "notice": "Get all milestones for a project"
+      },
+      "getMilestone(uint256,uint256)": {
+        "notice": "Get milestone details"
+      },
+      "getProject(uint256)": {
+        "notice": "Get project details"
+      },
+      "getProjectStats(uint256)": {
+        "notice": "Get project statistics"
+      },
+      "rejectMilestone(uint256,uint256,string)": {
+        "notice": "Client rejects a milestone submission"
+      },
+      "releaseMilestone(uint256,uint256)": {
+        "notice": "Release payment for completed/approved milestone"
+      },
+      "startMilestone(uint256,uint256)": {
+        "notice": "Freelancer starts working on a milestone"
+      },
+      "submitMilestone(uint256,uint256,string)": {
+        "notice": "Freelancer submits a completed milestone"
+      }
+    },
+    "notice": "Milestone-based escrow for freelance payments with PM fee mechanism",
+    "version": 1
+  },
+  "storageLayout": {
+    "storage": [
+      {
+        "astId": 10,
+        "contract": "contracts/MilestoneEscrow.sol:MilestoneEscrow",
+        "label": "_status",
+        "offset": 0,
+        "slot": "0",
+        "type": "t_uint256"
+      },
+      {
+        "astId": 117,
+        "contract": "contracts/MilestoneEscrow.sol:MilestoneEscrow",
+        "label": "projectCount",
+        "offset": 0,
+        "slot": "1",
+        "type": "t_uint256"
+      },
+      {
+        "astId": 122,
+        "contract": "contracts/MilestoneEscrow.sol:MilestoneEscrow",
+        "label": "projects",
+        "offset": 0,
+        "slot": "2",
+        "type": "t_mapping(t_uint256,t_struct(Project)115_storage)"
+      }
+    ],
+    "types": {
+      "t_address": {
+        "encoding": "inplace",
+        "label": "address",
+        "numberOfBytes": "20"
+      },
+      "t_array(t_struct(Milestone)94_storage)dyn_storage": {
+        "base": "t_struct(Milestone)94_storage",
+        "encoding": "dynamic_array",
+        "label": "struct MilestoneEscrow.Milestone[]",
+        "numberOfBytes": "32"
+      },
+      "t_bool": {
+        "encoding": "inplace",
+        "label": "bool",
+        "numberOfBytes": "1"
+      },
+      "t_enum(MilestoneStatus)80": {
+        "encoding": "inplace",
+        "label": "enum MilestoneEscrow.MilestoneStatus",
+        "numberOfBytes": "1"
+      },
+      "t_mapping(t_uint256,t_struct(Project)115_storage)": {
+        "encoding": "mapping",
+        "key": "t_uint256",
+        "label": "mapping(uint256 => struct MilestoneEscrow.Project)",
+        "numberOfBytes": "32",
+        "value": "t_struct(Project)115_storage"
+      },
+      "t_string_storage": {
+        "encoding": "bytes",
+        "label": "string",
+        "numberOfBytes": "32"
+      },
+      "t_struct(Milestone)94_storage": {
+        "encoding": "inplace",
+        "label": "struct MilestoneEscrow.Milestone",
+        "members": [
+          {
+            "astId": 82,
+            "contract": "contracts/MilestoneEscrow.sol:MilestoneEscrow",
+            "label": "description",
+            "offset": 0,
+            "slot": "0",
+            "type": "t_string_storage"
+          },
+          {
+            "astId": 84,
+            "contract": "contracts/MilestoneEscrow.sol:MilestoneEscrow",
+            "label": "amount",
+            "offset": 0,
+            "slot": "1",
+            "type": "t_uint256"
+          },
+          {
+            "astId": 86,
+            "contract": "contracts/MilestoneEscrow.sol:MilestoneEscrow",
+            "label": "createdAt",
+            "offset": 0,
+            "slot": "2",
+            "type": "t_uint256"
+          },
+          {
+            "astId": 88,
+            "contract": "contracts/MilestoneEscrow.sol:MilestoneEscrow",
+            "label": "submittedAt",
+            "offset": 0,
+            "slot": "3",
+            "type": "t_uint256"
+          },
+          {
+            "astId": 91,
+            "contract": "contracts/MilestoneEscrow.sol:MilestoneEscrow",
+            "label": "status",
+            "offset": 0,
+            "slot": "4",
+            "type": "t_enum(MilestoneStatus)80"
+          },
+          {
+            "astId": 93,
+            "contract": "contracts/MilestoneEscrow.sol:MilestoneEscrow",
+            "label": "submissionNote",
+            "offset": 0,
+            "slot": "5",
+            "type": "t_string_storage"
+          }
+        ],
+        "numberOfBytes": "192"
+      },
+      "t_struct(Project)115_storage": {
+        "encoding": "inplace",
+        "label": "struct MilestoneEscrow.Project",
+        "members": [
+          {
+            "astId": 96,
+            "contract": "contracts/MilestoneEscrow.sol:MilestoneEscrow",
+            "label": "client",
+            "offset": 0,
+            "slot": "0",
+            "type": "t_address"
+          },
+          {
+            "astId": 98,
+            "contract": "contracts/MilestoneEscrow.sol:MilestoneEscrow",
+            "label": "freelancer",
+            "offset": 0,
+            "slot": "1",
+            "type": "t_address"
+          },
+          {
+            "astId": 100,
+            "contract": "contracts/MilestoneEscrow.sol:MilestoneEscrow",
+            "label": "pm",
+            "offset": 0,
+            "slot": "2",
+            "type": "t_address"
+          },
+          {
+            "astId": 102,
+            "contract": "contracts/MilestoneEscrow.sol:MilestoneEscrow",
+            "label": "pmFeeBps",
+            "offset": 0,
+            "slot": "3",
+            "type": "t_uint256"
+          },
+          {
+            "astId": 104,
+            "contract": "contracts/MilestoneEscrow.sol:MilestoneEscrow",
+            "label": "totalAmount",
+            "offset": 0,
+            "slot": "4",
+            "type": "t_uint256"
+          },
+          {
+            "astId": 106,
+            "contract": "contracts/MilestoneEscrow.sol:MilestoneEscrow",
+            "label": "totalPaid",
+            "offset": 0,
+            "slot": "5",
+            "type": "t_uint256"
+          },
+          {
+            "astId": 108,
+            "contract": "contracts/MilestoneEscrow.sol:MilestoneEscrow",
+            "label": "totalPmFees",
+            "offset": 0,
+            "slot": "6",
+            "type": "t_uint256"
+          },
+          {
+            "astId": 110,
+            "contract": "contracts/MilestoneEscrow.sol:MilestoneEscrow",
+            "label": "active",
+            "offset": 0,
+            "slot": "7",
+            "type": "t_bool"
+          },
+          {
+            "astId": 114,
+            "contract": "contracts/MilestoneEscrow.sol:MilestoneEscrow",
+            "label": "milestones",
+            "offset": 0,
+            "slot": "8",
+            "type": "t_array(t_struct(Milestone)94_storage)dyn_storage"
+          }
+        ],
+        "numberOfBytes": "288"
+      },
+      "t_uint256": {
+        "encoding": "inplace",
+        "label": "uint256",
+        "numberOfBytes": "32"
+      }
+    }
+  }
+}
