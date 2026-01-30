@@ -3,14 +3,15 @@
 import { useMemo } from "react";
 import dynamic from "next/dynamic";
 import { useParams, useRouter } from "next/navigation";
+import { Address } from "@scaffold-ui/components";
 import type { NextPage } from "next";
 import { formatEther } from "viem";
-import { Address } from "@scaffold-ui/components";
 import { hardhat } from "viem/chains";
+import { MilestoneStatus, StatusBadge } from "~~/components/escrow/StatusBadge";
 import { useScaffoldReadContract } from "~~/hooks/scaffold-eth/useScaffoldReadContract";
 import { useTargetNetwork } from "~~/hooks/scaffold-eth/useTargetNetwork";
-import { StatusBadge, MilestoneStatus } from "~~/components/escrow/StatusBadge";
-import { useProjectRole, getRoleLabel, getRoleColor } from "~~/hooks/useProjectRole";
+import { useNativeCurrency } from "~~/hooks/useNativeCurrency";
+import { getRoleColor, getRoleLabel, useProjectRole } from "~~/hooks/useProjectRole";
 
 // Dynamic import for heavy component (418 lines) - only loads when needed
 const ApprovalActions = dynamic(
@@ -18,7 +19,7 @@ const ApprovalActions = dynamic(
   {
     loading: () => <div className="h-10" />,
     ssr: false,
-  }
+  },
 );
 
 interface ProjectData {
@@ -57,6 +58,7 @@ const ProjectDetailPage: NextPage = () => {
   const router = useRouter();
   const projectId = Number(params.id);
   const { targetNetwork } = useTargetNetwork();
+  const { symbol: currencySymbol } = useNativeCurrency();
 
   const {
     data: projectData,
@@ -152,14 +154,13 @@ const ProjectDetailPage: NextPage = () => {
           pm: project.pm,
           assignees: milestones?.assignees,
         }
-      : undefined
+      : undefined,
   );
 
   // Get unique assignees (workers) from milestones
   const uniqueAssignees = useMemo(() => {
     if (!milestones?.assignees) return [];
-    const unique = [...new Set(milestones.assignees)]
-      .filter(addr => addr && addr !== ZERO_ADDRESS);
+    const unique = [...new Set(milestones.assignees)].filter(addr => addr && addr !== ZERO_ADDRESS);
     return unique;
   }, [milestones?.assignees]);
 
@@ -197,9 +198,7 @@ const ProjectDetailPage: NextPage = () => {
 
   const pmFeePercent = Number(project.pmFeeBps) / 100;
   const progressPercent =
-    Number(stats.totalMilestones) > 0
-      ? (Number(stats.completedMilestones) / Number(stats.totalMilestones)) * 100
-      : 0;
+    Number(stats.totalMilestones) > 0 ? (Number(stats.completedMilestones) / Number(stats.totalMilestones)) * 100 : 0;
 
   return (
     <div className="container mx-auto px-4 py-8">
@@ -237,8 +236,7 @@ const ProjectDetailPage: NextPage = () => {
               <div className="flex flex-col gap-2">
                 <div className="flex justify-between text-sm">
                   <span>
-                    {Number(stats.completedMilestones)}/{Number(stats.totalMilestones)} milestones
-                    completed
+                    {Number(stats.completedMilestones)}/{Number(stats.totalMilestones)} milestones completed
                   </span>
                   <span>{progressPercent.toFixed(0)}%</span>
                 </div>
@@ -248,20 +246,20 @@ const ProjectDetailPage: NextPage = () => {
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mt-4">
                 <div className="text-center p-3 bg-base-200 rounded-lg">
                   <p className="text-2xl font-bold">{formatEther(project.totalAmount)}</p>
-                  <p className="text-xs opacity-70">Total ETH</p>
+                  <p className="text-xs opacity-70">Total {currencySymbol}</p>
                 </div>
                 <div className="text-center p-3 bg-base-200 rounded-lg">
                   <p className="text-2xl font-bold">{formatEther(project.totalPaid)}</p>
-                  <p className="text-xs opacity-70">Paid ETH</p>
+                  <p className="text-xs opacity-70">Paid {currencySymbol}</p>
                 </div>
                 <div className="text-center p-3 bg-base-200 rounded-lg">
                   <p className="text-2xl font-bold">{formatEther(stats.remainingAmount)}</p>
-                  <p className="text-xs opacity-70">Remaining ETH</p>
+                  <p className="text-xs opacity-70">Remaining {currencySymbol}</p>
                 </div>
                 {project.pm !== ZERO_ADDRESS && (
                   <div className="text-center p-3 bg-base-200 rounded-lg">
                     <p className="text-2xl font-bold">{formatEther(project.totalPmFees)}</p>
-                    <p className="text-xs opacity-70">PM Fees ETH</p>
+                    <p className="text-xs opacity-70">PM Fees {currencySymbol}</p>
                   </div>
                 )}
               </div>
@@ -318,7 +316,9 @@ const ProjectDetailPage: NextPage = () => {
                           </div>
                           <div>
                             <h3 className="font-semibold">{description}</h3>
-                            <p className="text-sm opacity-70">{formatEther(amount)} ETH</p>
+                            <p className="text-sm opacity-70">
+                              {formatEther(amount)} {currencySymbol}
+                            </p>
                             {project.pm !== ZERO_ADDRESS && (
                               <p className="text-xs opacity-50">
                                 PM fee: {formatEther((amount * project.pmFeeBps) / 10000n)} ETH ({pmFeePercent}%)
@@ -457,7 +457,9 @@ const ProjectDetailPage: NextPage = () => {
                 </div>
                 <div className="stat">
                   <div className="stat-title">Paid Out</div>
-                  <div className="stat-value text-lg">{formatEther(project.totalPaid)} ETH</div>
+                  <div className="stat-value text-lg">
+                    {formatEther(project.totalPaid)} {currencySymbol}
+                  </div>
                 </div>
               </div>
             </div>

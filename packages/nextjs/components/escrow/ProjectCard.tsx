@@ -1,9 +1,10 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { formatEther } from "viem";
 import { Address } from "@scaffold-ui/components";
-import { ProjectRole, getRoleLabel, getRoleColor } from "~~/hooks/useProjectRole";
+import { formatEther } from "viem";
+import { useNativeCurrency } from "~~/hooks/useNativeCurrency";
+import { ProjectRole, getRoleColor, getRoleLabel } from "~~/hooks/useProjectRole";
 
 interface ProjectCardProps {
   projectId: number;
@@ -33,6 +34,7 @@ export const ProjectCard = ({
   role,
 }: ProjectCardProps) => {
   const router = useRouter();
+  const { symbol: currencySymbol } = useNativeCurrency();
   const progressPercent = milestoneCount > 0 ? (completedMilestones / milestoneCount) * 100 : 0;
   const remainingAmount = totalAmount - totalPaid;
   const unassignedCount = milestoneCount - assignedMilestones - completedMilestones;
@@ -79,11 +81,7 @@ export const ProjectCard = ({
               {completedMilestones}/{milestoneCount} completed
             </span>
           </div>
-          <progress
-            className="progress progress-primary w-full"
-            value={progressPercent}
-            max="100"
-          />
+          <progress className="progress progress-primary w-full" value={progressPercent} max="100" />
           {unassignedCount > 0 && (
             <p className="text-xs text-info">
               {unassignedCount} milestone{unassignedCount > 1 ? "s" : ""} need assignment
@@ -94,11 +92,15 @@ export const ProjectCard = ({
         <div className="mt-4 grid grid-cols-2 gap-4">
           <div className="rounded-lg bg-base-200 p-3">
             <p className="text-xs opacity-70">Total Value</p>
-            <p className="font-bold">{formatEther(totalAmount)} ETH</p>
+            <p className="font-bold">
+              {formatEther(totalAmount)} {currencySymbol}
+            </p>
           </div>
           <div className="rounded-lg bg-base-200 p-3">
             <p className="text-xs opacity-70">Remaining</p>
-            <p className="font-bold">{formatEther(remainingAmount)} ETH</p>
+            <p className="font-bold">
+              {formatEther(remainingAmount)} {currencySymbol}
+            </p>
           </div>
         </div>
       </div>

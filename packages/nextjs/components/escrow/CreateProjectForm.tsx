@@ -2,9 +2,10 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { parseEther, isAddress } from "viem";
-import { useScaffoldWriteContract } from "~~/hooks/scaffold-eth";
 import { AIMilestoneSplitter } from "./AIMilestoneSplitter";
+import { isAddress, parseEther } from "viem";
+import { useScaffoldWriteContract } from "~~/hooks/scaffold-eth";
+import { useNativeCurrency } from "~~/hooks/useNativeCurrency";
 import { MilestoneSuggestion } from "~~/utils/mockAI";
 import { notification } from "~~/utils/scaffold-eth";
 
@@ -16,6 +17,7 @@ interface MilestoneInput {
 
 export const CreateProjectForm = () => {
   const router = useRouter();
+  const { symbol: currencySymbol } = useNativeCurrency();
   const [step, setStep] = useState(1);
   const [milestones, setMilestones] = useState<MilestoneInput[]>([]);
   const [pmAddress, setPmAddress] = useState("");
@@ -166,7 +168,7 @@ export const CreateProjectForm = () => {
                               value={milestone.amount}
                               onChange={e => handleMilestoneChange(index, "amount", e.target.value)}
                             />
-                            <span>ETH</span>
+                            <span>{currencySymbol}</span>
                           </div>
                         </div>
                         <button
@@ -213,7 +215,9 @@ export const CreateProjectForm = () => {
 
               <div className="flex justify-between items-center">
                 <span className="font-semibold">Total Amount:</span>
-                <span className="text-xl font-bold">{totalAmount.toFixed(4)} ETH</span>
+                <span className="text-xl font-bold">
+                  {totalAmount.toFixed(4)} {currencySymbol}
+                </span>
               </div>
             </div>
           </div>
@@ -241,8 +245,18 @@ export const CreateProjectForm = () => {
               <h3 className="card-title">Project Configuration</h3>
 
               <div className="alert alert-info">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" className="stroke-current shrink-0 w-6 h-6">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  className="stroke-current shrink-0 w-6 h-6"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                  />
                 </svg>
                 <div>
                   <p className="text-sm">Workers can be assigned to each milestone after creation.</p>
@@ -302,7 +316,9 @@ export const CreateProjectForm = () => {
                 </div>
                 <div>
                   <p className="text-sm opacity-70">Total Value</p>
-                  <p className="font-bold">{totalAmount.toFixed(4)} ETH</p>
+                  <p className="font-bold">
+                    {totalAmount.toFixed(4)} {currencySymbol}
+                  </p>
                 </div>
                 <div>
                   <p className="text-sm opacity-70">Pre-assigned</p>
@@ -324,18 +340,14 @@ export const CreateProjectForm = () => {
             <button className="btn btn-ghost" onClick={() => setStep(2)}>
               Back
             </button>
-            <button
-              className="btn btn-primary"
-              onClick={handleCreate}
-              disabled={!isValidForm() || isMining}
-            >
+            <button className="btn btn-primary" onClick={handleCreate} disabled={!isValidForm() || isMining}>
               {isMining ? (
                 <>
                   <span className="loading loading-spinner loading-sm" />
                   Creating...
                 </>
               ) : (
-                `Create Project (${totalAmount.toFixed(4)} ETH)`
+                `Create Project (${totalAmount.toFixed(4)} ${currencySymbol})`
               )}
             </button>
           </div>

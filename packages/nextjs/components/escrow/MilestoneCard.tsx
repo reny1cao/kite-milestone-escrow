@@ -1,7 +1,8 @@
 "use client";
 
+import { MilestoneStatus, StatusBadge } from "./StatusBadge";
 import { formatEther } from "viem";
-import { StatusBadge, MilestoneStatus } from "./StatusBadge";
+import { useNativeCurrency } from "~~/hooks/useNativeCurrency";
 
 interface MilestoneCardProps {
   index: number;
@@ -30,10 +31,12 @@ export const MilestoneCard = ({
   onReject,
   isLoading = false,
 }: MilestoneCardProps) => {
+  const { symbol: currencySymbol } = useNativeCurrency();
   const statusNum = Number(status);
 
   const canStart = role === "freelancer" && statusNum === MilestoneStatus.Created;
-  const canSubmit = role === "freelancer" && (statusNum === MilestoneStatus.Created || statusNum === MilestoneStatus.InProgress);
+  const canSubmit =
+    role === "freelancer" && (statusNum === MilestoneStatus.Created || statusNum === MilestoneStatus.InProgress);
   const canApprove = role === "client" && statusNum === MilestoneStatus.Submitted;
   const canReject = role === "client" && statusNum === MilestoneStatus.Submitted;
 
@@ -47,7 +50,9 @@ export const MilestoneCard = ({
             </div>
             <div>
               <h3 className="font-semibold">{description}</h3>
-              <p className="text-sm opacity-70">{formatEther(amount)} ETH</p>
+              <p className="text-sm opacity-70">
+                {formatEther(amount)} {currencySymbol}
+              </p>
             </div>
           </div>
           <StatusBadge status={statusNum} />
@@ -63,38 +68,22 @@ export const MilestoneCard = ({
         {(canStart || canSubmit || canApprove || canReject) && (
           <div className="card-actions mt-4 justify-end">
             {canStart && (
-              <button
-                className="btn btn-outline btn-sm"
-                onClick={onStart}
-                disabled={isLoading}
-              >
+              <button className="btn btn-outline btn-sm" onClick={onStart} disabled={isLoading}>
                 {isLoading ? <span className="loading loading-spinner loading-xs" /> : "Start Work"}
               </button>
             )}
             {canSubmit && (
-              <button
-                className="btn btn-primary btn-sm"
-                onClick={onSubmit}
-                disabled={isLoading}
-              >
+              <button className="btn btn-primary btn-sm" onClick={onSubmit} disabled={isLoading}>
                 {isLoading ? <span className="loading loading-spinner loading-xs" /> : "Submit"}
               </button>
             )}
             {canReject && (
-              <button
-                className="btn btn-outline btn-error btn-sm"
-                onClick={onReject}
-                disabled={isLoading}
-              >
+              <button className="btn btn-outline btn-error btn-sm" onClick={onReject} disabled={isLoading}>
                 {isLoading ? <span className="loading loading-spinner loading-xs" /> : "Reject"}
               </button>
             )}
             {canApprove && (
-              <button
-                className="btn btn-success btn-sm"
-                onClick={onApprove}
-                disabled={isLoading}
-              >
+              <button className="btn btn-success btn-sm" onClick={onApprove} disabled={isLoading}>
                 {isLoading ? <span className="loading loading-spinner loading-xs" /> : "Approve & Pay"}
               </button>
             )}
