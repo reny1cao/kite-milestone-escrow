@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef, useState } from "react";
+import { SparklesIcon } from "@heroicons/react/24/outline";
 import { useNativeCurrency } from "~~/hooks/useNativeCurrency";
 import { MilestoneSuggestion, streamSplitMilestones } from "~~/utils/mockAI";
 
@@ -9,6 +10,8 @@ interface AIMilestoneSplitterProps {
 }
 
 type Level = "solo" | "agent" | "team";
+
+const fieldLabel = "text-xs font-medium uppercase tracking-wide opacity-60";
 
 export const AIMilestoneSplitter = ({ onAccept }: AIMilestoneSplitterProps) => {
   const { symbol: currencySymbol } = useNativeCurrency();
@@ -67,59 +70,73 @@ export const AIMilestoneSplitter = ({ onAccept }: AIMilestoneSplitterProps) => {
   };
 
   const totalSuggested = suggestions.reduce((s, m) => s + (parseFloat(m.amount) || 0), 0);
+  const canGenerate = description.trim().length > 0 && !isStreaming;
 
   return (
-    <div className="card bg-base-200">
-      <div className="card-body">
-        <h3 className="card-title text-lg">AI Milestone Splitter</h3>
-        <p className="text-sm opacity-70">
-          Describe your project and Kimi will propose a milestone breakdown with acceptance criteria.
-        </p>
+    <div className="rounded-2xl border border-base-300 bg-base-100 shadow-sm">
+      <div className="flex items-center gap-3 border-b border-base-300 px-6 py-4">
+        <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-gradient-to-br from-primary/20 to-secondary/20">
+          <SparklesIcon className="h-5 w-5 text-primary" />
+        </div>
+        <div className="flex-1">
+          <h3 className="font-semibold leading-tight">AI Milestone Splitter</h3>
+          <p className="text-xs opacity-60">
+            Kimi proposes a milestone breakdown with acceptance criteria, streamed live.
+          </p>
+        </div>
+      </div>
 
-        <div className="form-control mt-4">
-          <label className="label">
-            <span className="label-text">Project Description</span>
+      <div className="space-y-5 px-6 py-5">
+        <div className="space-y-2">
+          <label htmlFor="ai-description" className={fieldLabel}>
+            Project description
           </label>
           <textarea
-            className="textarea textarea-bordered h-24"
-            placeholder="e.g., Build a portfolio website with React and Next.js..."
+            id="ai-description"
+            className="textarea textarea-bordered w-full min-h-[6rem] resize-y leading-relaxed"
+            placeholder="e.g., Build a portfolio website in Next.js with a hero, projects grid, and a contact form"
             value={description}
             onChange={e => setDescription(e.target.value)}
           />
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-3 mt-3">
-          <div className="form-control">
-            <label className="label cursor-pointer justify-start gap-2">
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
+          <div className="space-y-2">
+            <div className="flex items-center justify-between">
+              <label htmlFor="ai-budget" className={fieldLabel}>
+                Total budget
+              </label>
               <input
                 type="checkbox"
-                className="toggle toggle-sm toggle-primary"
+                aria-label="Toggle budget"
+                className="toggle toggle-xs toggle-primary"
                 checked={useBudget}
                 onChange={e => setUseBudget(e.target.checked)}
               />
-              <span className="label-text">Set total budget</span>
-            </label>
-            <div className="input-group">
+            </div>
+            <div className="join w-full">
               <input
+                id="ai-budget"
                 type="number"
                 step="0.01"
                 min="0.001"
-                className="input input-bordered input-sm w-full"
-                placeholder="Total"
+                className="input input-sm input-bordered join-item w-full"
+                placeholder="Optional"
                 value={budget}
                 disabled={!useBudget}
                 onChange={e => setBudget(e.target.value)}
               />
-              <span className="text-xs">{currencySymbol}</span>
+              <span className="join-item flex items-center bg-base-200 px-3 text-xs opacity-70">{currencySymbol}</span>
             </div>
           </div>
 
-          <div className="form-control">
-            <label className="label">
-              <span className="label-text">Worker profile</span>
+          <div className="space-y-2">
+            <label htmlFor="ai-level" className={fieldLabel}>
+              Worker profile
             </label>
             <select
-              className="select select-bordered select-sm"
+              id="ai-level"
+              className="select select-sm select-bordered w-full"
               value={level}
               onChange={e => setLevel(e.target.value as Level)}
             >
@@ -129,74 +146,96 @@ export const AIMilestoneSplitter = ({ onAccept }: AIMilestoneSplitterProps) => {
             </select>
           </div>
 
-          <div className="form-control">
-            <label className="label">
-              <span className="label-text">Duration (days, optional)</span>
+          <div className="space-y-2">
+            <label htmlFor="ai-duration" className={fieldLabel}>
+              Duration (days)
             </label>
             <input
+              id="ai-duration"
               type="number"
               min="1"
-              className="input input-bordered input-sm"
-              placeholder="e.g. 14"
+              className="input input-sm input-bordered w-full"
+              placeholder="Optional"
               value={durationDays}
               onChange={e => setDurationDays(e.target.value)}
             />
           </div>
         </div>
 
-        <div className="card-actions mt-4 justify-end">
-          <button className="btn btn-primary" onClick={handleGenerate} disabled={isStreaming || !description.trim()}>
+        <div className="flex justify-end">
+          <button className="btn btn-primary" onClick={handleGenerate} disabled={!canGenerate}>
             {isStreaming ? (
               <>
                 <span className="loading loading-spinner loading-sm" />
-                Generating...
+                Generating…
               </>
-            ) : suggestions.length ? (
-              "Regenerate"
             ) : (
-              "Generate Milestones"
+              <>
+                <SparklesIcon className="h-4 w-4" />
+                {suggestions.length ? "Regenerate" : "Generate milestones"}
+              </>
             )}
           </button>
         </div>
 
         {error && (
-          <div className="alert alert-error mt-3 text-sm">
+          <div className="alert alert-error text-sm">
             <span>{error}</span>
           </div>
         )}
 
-        {suggestions.length > 0 && (
-          <div className="mt-4 space-y-3">
-            <div className="flex justify-between items-baseline">
-              <h4 className="font-semibold">Suggestions ({suggestions.length})</h4>
-              <span className="text-sm opacity-70">
-                Total: {totalSuggested.toFixed(3)} {currencySymbol}
-              </span>
+        {(suggestions.length > 0 || isStreaming) && (
+          <div className="space-y-3 rounded-xl bg-base-200/60 p-4">
+            <div className="flex items-baseline justify-between">
+              <h4 className="text-sm font-semibold">
+                {isStreaming ? "Streaming suggestions…" : `Suggestions (${suggestions.length})`}
+              </h4>
+              {suggestions.length > 0 && (
+                <span className="text-xs opacity-70">
+                  Total: {totalSuggested.toFixed(3)} {currencySymbol}
+                </span>
+              )}
             </div>
-            <ul className="space-y-2">
+
+            <ol className="space-y-2">
               {suggestions.map((m, i) => (
-                <li key={i} className="bg-base-100 rounded-md p-3">
-                  <div className="flex justify-between gap-2">
-                    <span className="font-medium">
-                      {i + 1}. {m.description}
-                    </span>
-                    <span className="text-sm whitespace-nowrap">
-                      {m.amount} {currencySymbol}
+                <li key={i} className="rounded-lg border border-base-300 bg-base-100 p-3">
+                  <div className="flex items-start justify-between gap-3">
+                    <div className="flex items-start gap-2">
+                      <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-primary/10 text-[10px] font-bold text-primary">
+                        {i + 1}
+                      </span>
+                      <span className="font-medium">{m.description}</span>
+                    </div>
+                    <span className="whitespace-nowrap text-sm tabular-nums">
+                      {m.amount} <span className="opacity-60">{currencySymbol}</span>
                     </span>
                   </div>
-                  {m.acceptance && <div className="text-xs opacity-70 mt-1">Acceptance: {m.acceptance}</div>}
+                  {m.acceptance && (
+                    <div className="mt-2 ml-7 text-xs opacity-70">
+                      <span className="font-medium opacity-100">Acceptance:</span> {m.acceptance}
+                    </div>
+                  )}
                 </li>
               ))}
-            </ul>
+              {isStreaming && (
+                <li className="flex items-center gap-2 rounded-lg border border-dashed border-base-300 p-3 text-sm opacity-60">
+                  <span className="loading loading-dots loading-sm" />
+                  thinking…
+                </li>
+              )}
+            </ol>
 
-            <div className="flex justify-end gap-2">
-              <button className="btn btn-ghost btn-sm" onClick={() => setSuggestions([])}>
-                Clear
-              </button>
-              <button className="btn btn-primary btn-sm" onClick={handleAccept} disabled={isStreaming}>
-                Use these milestones
-              </button>
-            </div>
+            {suggestions.length > 0 && !isStreaming && (
+              <div className="flex justify-end gap-2 pt-1">
+                <button className="btn btn-ghost btn-sm" onClick={() => setSuggestions([])}>
+                  Clear
+                </button>
+                <button className="btn btn-primary btn-sm" onClick={handleAccept}>
+                  Use these milestones
+                </button>
+              </div>
+            )}
           </div>
         )}
       </div>

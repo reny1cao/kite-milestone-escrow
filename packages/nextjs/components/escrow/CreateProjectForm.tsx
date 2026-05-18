@@ -139,8 +139,8 @@ export const CreateProjectForm = () => {
             <div className="card-body">
               <div className="flex justify-between items-center">
                 <h3 className="card-title">Milestones</h3>
-                <label className="label cursor-pointer gap-2">
-                  <span className="label-text text-sm">Assign workers now</span>
+                <label className="flex cursor-pointer items-center gap-2">
+                  <span className="text-sm">Assign workers now</span>
                   <input
                     type="checkbox"
                     className="toggle toggle-sm toggle-primary"
@@ -165,19 +165,19 @@ export const CreateProjectForm = () => {
                         onChange={e => handleMilestoneChange(index, "description", e.target.value)}
                       />
                       <div className="flex gap-2">
-                        <div className="form-control flex-1">
-                          <div className="input-group">
-                            <input
-                              type="number"
-                              step="0.01"
-                              min="0.001"
-                              className="input input-bordered w-full"
-                              placeholder="Amount"
-                              value={milestone.amount}
-                              onChange={e => handleMilestoneChange(index, "amount", e.target.value)}
-                            />
-                            <span>{currencySymbol}</span>
-                          </div>
+                        <div className="join flex-1">
+                          <input
+                            type="number"
+                            step="0.01"
+                            min="0.001"
+                            className="input input-bordered join-item w-full"
+                            placeholder="Amount"
+                            value={milestone.amount}
+                            onChange={e => handleMilestoneChange(index, "amount", e.target.value)}
+                          />
+                          <span className="join-item flex items-center bg-base-200 px-3 text-sm opacity-70">
+                            {currencySymbol}
+                          </span>
                         </div>
                         <button
                           className="btn btn-ghost btn-square text-error"
@@ -274,28 +274,28 @@ export const CreateProjectForm = () => {
 
               <div className="divider">Optional: Project Manager</div>
 
-              <div className="form-control">
-                <label className="label">
-                  <span className="label-text">PM Address</span>
+              <div className="space-y-2">
+                <label htmlFor="pm-address" className="text-sm font-medium">
+                  PM Address
                 </label>
                 <input
+                  id="pm-address"
                   type="text"
-                  className={`input input-bordered ${pmAddress && !isAddress(pmAddress) ? "input-error" : ""}`}
+                  className={`input input-bordered w-full ${pmAddress && !isAddress(pmAddress) ? "input-error" : ""}`}
                   placeholder="0x... (leave empty for no PM)"
                   value={pmAddress}
                   onChange={e => setPmAddress(e.target.value)}
                 />
-                <label className="label">
-                  <span className="label-text-alt opacity-70">PM can assign workers and earns commission</span>
-                </label>
+                <p className="text-xs opacity-70">PM can assign workers and earns commission</p>
               </div>
 
               {pmAddress && isAddress(pmAddress) && (
-                <div className="form-control">
-                  <label className="label">
-                    <span className="label-text">PM Fee (%)</span>
+                <div className="space-y-2">
+                  <label htmlFor="pm-fee" className="text-sm font-medium">
+                    PM Fee (%)
                   </label>
                   <input
+                    id="pm-fee"
                     type="range"
                     min="100"
                     max="2000"

@@ -92,7 +92,7 @@ export async function POST(req: NextRequest) {
     body: JSON.stringify({
       model: KIMI_MODEL,
       stream: true,
-      temperature: 0.3,
+      temperature: 0.1,
       messages: [
         { role: "system", content: systemPrompt(budget, currency) },
         { role: "user", content: userPrompt(body, currency) },
@@ -123,10 +123,19 @@ export async function POST(req: NextRequest) {
       };
 
       const handleLine = (line: string) => {
-        const trimmed = line.trim();
-        if (!trimmed) return;
+        // Strip leading/trailing whitespace and common code-fence markers Kimi may emit.
+        const trimmed = line
+          .replace(/^```(?:json|jsonl|ndjson)?\s*/i, "")
+          .replace(/\s*```$/, "")
+          .trim();
+        if (!trimmed || trimmed.startsWith("//") || trimmed.startsWith("#")) return;
+        // Find the first JSON object on the line (some models add prose prefixes).
+        const start = trimmed.indexOf("{");
+        const end = trimmed.lastIndexOf("}");
+        if (start === -1 || end === -1 || end < start) return;
+        const candidate = trimmed.slice(start, end + 1);
         try {
-          const parsed = JSON.parse(trimmed) as StreamMilestone;
+          const parsed = JSON.parse(candidate) as StreamMilestone;
           if (
             typeof parsed?.description === "string" &&
             typeof parsed?.amount === "number" &&
