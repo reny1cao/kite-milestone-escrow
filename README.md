@@ -19,7 +19,7 @@ Freelance and contract work on-chain typically falls back to a single lump payme
 - **Optional Project Manager** — a PM can route assignments and earn a configurable commission (0–20%, in basis points).
 - **Auto-release on timeout** — submitted work auto-approves after 14 days if the client doesn't respond, protecting workers from silent ghosting.
 - **Reentrancy-safe payouts** — uses OpenZeppelin `ReentrancyGuard`; minimum milestone amount of `0.001 KITE`.
-- **AI Milestone Splitter (UI)** — a helper that turns a project description into suggested milestones at creation time.
+- **AI Milestone Splitter** — turn a plain-text project brief into a milestone breakdown with per-milestone acceptance criteria. Streams from Kimi (Moonshot CN) and respects an optional total budget.
 
 ### Milestone state machine
 
@@ -95,6 +95,12 @@ Create `packages/nextjs/.env.local`:
 ```
 NEXT_PUBLIC_ALCHEMY_API_KEY=...
 NEXT_PUBLIC_WALLET_CONNECT_PROJECT_ID=...
+
+# Required for the AI Milestone Splitter (Kimi / Moonshot CN)
+KIMI_API_KEY=...
+# Optional:
+# KIMI_BASE_URL=https://api.moonshot.cn/v1
+# KIMI_MODEL=moonshot-v1-8k
 ```
 
 For deployments (in `packages/hardhat/.env`):
@@ -105,13 +111,25 @@ DEPLOYER_PRIVATE_KEY_ENCRYPTED=...
 
 Generate or import a deployer key with `yarn account:generate` / `yarn account:import`.
 
+### Using Infisical (recommended)
+
+`KIMI_API_KEY` lives in our shared Infisical workspace. The repo ships an `.infisical.json` mapping the workspace + default env, so you can inject secrets at runtime instead of pasting them into `.env.local`:
+
+```bash
+infisical login          # one-time
+yarn start:ai            # runs `infisical run --env=dev --recursive -- yarn workspace @se-2/nextjs dev`
+```
+
+The secret never touches disk in this flow.
+
 ## Common commands
 
 ```bash
 # Development
 yarn chain                # Start local Hardhat node
 yarn deploy               # Compile, deploy, regenerate TypeScript ABIs
-yarn start                # Next.js dev server
+yarn start                # Next.js dev server (reads .env.local)
+yarn start:ai             # Same, but injects secrets from Infisical (Kimi key, etc.)
 
 # Testing & types
 yarn hardhat:test         # Solidity tests with gas reporting

@@ -1,60 +1,75 @@
 export interface MilestoneSuggestion {
   description: string;
   amount: string;
+  acceptance?: string;
 }
 
-export const mockSplitMilestones = async (description: string): Promise<MilestoneSuggestion[]> => {
-  // Simulate AI processing delay
-  await new Promise(r => setTimeout(r, 1500));
-
-  const lowerDesc = description.toLowerCase();
-
-  if (lowerDesc.includes('website') || lowerDesc.includes('web')) {
-    return [
-      { description: 'Design mockups and wireframes', amount: '0.5' },
-      { description: 'Frontend development', amount: '1.0' },
-      { description: 'Testing and deployment', amount: '0.5' },
-    ];
-  }
-
-  if (lowerDesc.includes('mobile') || lowerDesc.includes('app')) {
-    return [
-      { description: 'UI/UX design and prototyping', amount: '0.4' },
-      { description: 'Core functionality implementation', amount: '0.8' },
-      { description: 'API integration', amount: '0.5' },
-      { description: 'Testing and App Store submission', amount: '0.3' },
-    ];
-  }
-
-  if (lowerDesc.includes('smart contract') || lowerDesc.includes('blockchain') || lowerDesc.includes('solidity')) {
-    return [
-      { description: 'Contract architecture and design', amount: '0.3' },
-      { description: 'Smart contract development', amount: '0.6' },
-      { description: 'Security audit and testing', amount: '0.4' },
-      { description: 'Deployment and documentation', amount: '0.2' },
-    ];
-  }
-
-  if (lowerDesc.includes('logo') || lowerDesc.includes('brand') || lowerDesc.includes('design')) {
-    return [
-      { description: 'Concept exploration and moodboard', amount: '0.2' },
-      { description: 'Initial design drafts', amount: '0.4' },
-      { description: 'Revisions and final delivery', amount: '0.2' },
-    ];
-  }
-
-  if (lowerDesc.includes('portfolio')) {
-    return [
-      { description: 'Design mockups', amount: '0.5' },
-      { description: 'Frontend development', amount: '1.0' },
-      { description: 'Testing and deployment', amount: '0.5' },
-    ];
-  }
-
-  // Default response for any other project
-  return [
-    { description: 'Phase 1: Planning and requirements', amount: '0.3' },
-    { description: 'Phase 2: Implementation', amount: '0.5' },
-    { description: 'Phase 3: Review and delivery', amount: '0.2' },
-  ];
+export type SplitOptions = {
+  description: string;
+  budget?: number;
+  level?: "solo" | "agent" | "team";
+  durationDays?: number;
 };
+
+export type StreamEvent = { type: "milestone"; milestone: MilestoneSuggestion } | { type: "error"; message: string };
+
+/**
+ * Streams milestone suggestions from the AI splitter route.
+ * Yields one event per parsed NDJSON line.
+ */
+export async function* streamSplitMilestones(opts: SplitOptions, signal?: AbortSignal): AsyncGenerator<StreamEvent> {
+  const res = await fetch("/api/ai/split", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(opts),
+    signal,
+  });
+
+  if (!res.ok || !res.body) {
+    let msg = `HTTP ${res.status}`;
+    try {
+      const err = await res.json();
+      if (err?.error) msg = err.error;
+    } catch {
+      // ignore
+    }
+    yield { type: "error", message: msg };
+    return;
+  }
+
+  const reader = res.body.getReader();
+  const decoder = new TextDecoder();
+  let buffer = "";
+
+  while (true) {
+    const { value, done } = await reader.read();
+    if (done) break;
+    buffer += decoder.decode(value, { stream: true });
+
+    let nl: number;
+    while ((nl = buffer.indexOf("\n")) !== -1) {
+      const line = buffer.slice(0, nl).trim();
+      buffer = buffer.slice(nl + 1);
+      if (!line) continue;
+      try {
+        const parsed = JSON.parse(line);
+        if (parsed?.error) {
+          yield { type: "error", message: String(parsed.error) };
+          continue;
+        }
+        if (typeof parsed?.description === "string" && typeof parsed?.amount === "number") {
+          yield {
+            type: "milestone",
+            milestone: {
+              description: parsed.description,
+              amount: String(parsed.amount),
+              acceptance: typeof parsed.acceptance === "string" ? parsed.acceptance : undefined,
+            },
+          };
+        }
+      } catch {
+        // skip malformed lines
+      }
+    }
+  }
+}

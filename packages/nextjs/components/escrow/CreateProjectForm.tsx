@@ -6,7 +6,7 @@ import { AIMilestoneSplitter } from "./AIMilestoneSplitter";
 import { isAddress, parseEther } from "viem";
 import { useScaffoldWriteContract } from "~~/hooks/scaffold-eth";
 import { useNativeCurrency } from "~~/hooks/useNativeCurrency";
-import { MilestoneSuggestion } from "~~/utils/mockAI";
+import type { MilestoneSuggestion } from "~~/utils/mockAI";
 import { notification } from "~~/utils/scaffold-eth";
 
 interface MilestoneInput {
@@ -27,7 +27,15 @@ export const CreateProjectForm = () => {
   const { writeContractAsync, isMining } = useScaffoldWriteContract({ contractName: "ProjectEscrow" });
 
   const handleSuggestionsGenerated = (suggestions: MilestoneSuggestion[]) => {
-    setMilestones(suggestions.map(s => ({ ...s, assignee: "" })));
+    setMilestones(
+      suggestions.map(s => ({
+        description: s.acceptance
+          ? `${s.description}\n\nAcceptance:\n- ${s.acceptance.replace(/ \/ /g, "\n- ")}`
+          : s.description,
+        amount: s.amount,
+        assignee: "",
+      })),
+    );
     setStep(2);
   };
 
@@ -106,7 +114,7 @@ export const CreateProjectForm = () => {
       {/* Step 1: AI Splitter */}
       {step === 1 && (
         <div className="space-y-6">
-          <AIMilestoneSplitter onSuggestionsGenerated={handleSuggestionsGenerated} />
+          <AIMilestoneSplitter onAccept={handleSuggestionsGenerated} />
 
           <div className="divider">OR</div>
 
@@ -149,9 +157,9 @@ export const CreateProjectForm = () => {
                       {index + 1}
                     </div>
                     <div className="flex-1 space-y-2">
-                      <input
-                        type="text"
-                        className="input input-bordered w-full"
+                      <textarea
+                        className="textarea textarea-bordered w-full min-h-[3rem]"
+                        rows={milestone.description.includes("\n") ? 5 : 2}
                         placeholder="Milestone description"
                         value={milestone.description}
                         onChange={e => handleMilestoneChange(index, "description", e.target.value)}

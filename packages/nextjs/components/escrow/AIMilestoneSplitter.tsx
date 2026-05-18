@@ -1,34 +1,79 @@
 "use client";
 
-import { useState } from "react";
-import { mockSplitMilestones, MilestoneSuggestion } from "~~/utils/mockAI";
+import { useRef, useState } from "react";
+import { useNativeCurrency } from "~~/hooks/useNativeCurrency";
+import { MilestoneSuggestion, streamSplitMilestones } from "~~/utils/mockAI";
 
 interface AIMilestoneSplitterProps {
-  onSuggestionsGenerated: (suggestions: MilestoneSuggestion[]) => void;
+  onAccept: (suggestions: MilestoneSuggestion[]) => void;
 }
 
-export const AIMilestoneSplitter = ({ onSuggestionsGenerated }: AIMilestoneSplitterProps) => {
+type Level = "solo" | "agent" | "team";
+
+export const AIMilestoneSplitter = ({ onAccept }: AIMilestoneSplitterProps) => {
+  const { symbol: currencySymbol } = useNativeCurrency();
+
   const [description, setDescription] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
+  const [useBudget, setUseBudget] = useState(false);
+  const [budget, setBudget] = useState("1.0");
+  const [level, setLevel] = useState<Level>("solo");
+  const [durationDays, setDurationDays] = useState("");
+
+  const [suggestions, setSuggestions] = useState<MilestoneSuggestion[]>([]);
+  const [isStreaming, setIsStreaming] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const abortRef = useRef<AbortController | null>(null);
 
   const handleGenerate = async () => {
     if (!description.trim()) return;
+    abortRef.current?.abort();
+    const ctrl = new AbortController();
+    abortRef.current = ctrl;
 
-    setIsLoading(true);
+    setSuggestions([]);
+    setError(null);
+    setIsStreaming(true);
+
     try {
-      const suggestions = await mockSplitMilestones(description);
-      onSuggestionsGenerated(suggestions);
+      const parsedBudget = useBudget ? parseFloat(budget) : undefined;
+      const parsedDuration = durationDays ? parseInt(durationDays, 10) : undefined;
+      for await (const evt of streamSplitMilestones(
+        {
+          description,
+          budget: parsedBudget && parsedBudget > 0 ? parsedBudget : undefined,
+          level,
+          durationDays: parsedDuration && parsedDuration > 0 ? parsedDuration : undefined,
+        },
+        ctrl.signal,
+      )) {
+        if (evt.type === "error") {
+          setError(evt.message);
+        } else {
+          setSuggestions(prev => [...prev, evt.milestone]);
+        }
+      }
+    } catch (err) {
+      if ((err as Error).name !== "AbortError") {
+        setError((err as Error).message);
+      }
     } finally {
-      setIsLoading(false);
+      setIsStreaming(false);
     }
   };
+
+  const handleAccept = () => {
+    if (!suggestions.length) return;
+    onAccept(suggestions);
+  };
+
+  const totalSuggested = suggestions.reduce((s, m) => s + (parseFloat(m.amount) || 0), 0);
 
   return (
     <div className="card bg-base-200">
       <div className="card-body">
         <h3 className="card-title text-lg">AI Milestone Splitter</h3>
         <p className="text-sm opacity-70">
-          Describe your project and let AI suggest milestone breakdowns
+          Describe your project and Kimi will propose a milestone breakdown with acceptance criteria.
         </p>
 
         <div className="form-control mt-4">
@@ -43,38 +88,117 @@ export const AIMilestoneSplitter = ({ onSuggestionsGenerated }: AIMilestoneSplit
           />
         </div>
 
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-3 mt-3">
+          <div className="form-control">
+            <label className="label cursor-pointer justify-start gap-2">
+              <input
+                type="checkbox"
+                className="toggle toggle-sm toggle-primary"
+                checked={useBudget}
+                onChange={e => setUseBudget(e.target.checked)}
+              />
+              <span className="label-text">Set total budget</span>
+            </label>
+            <div className="input-group">
+              <input
+                type="number"
+                step="0.01"
+                min="0.001"
+                className="input input-bordered input-sm w-full"
+                placeholder="Total"
+                value={budget}
+                disabled={!useBudget}
+                onChange={e => setBudget(e.target.value)}
+              />
+              <span className="text-xs">{currencySymbol}</span>
+            </div>
+          </div>
+
+          <div className="form-control">
+            <label className="label">
+              <span className="label-text">Worker profile</span>
+            </label>
+            <select
+              className="select select-bordered select-sm"
+              value={level}
+              onChange={e => setLevel(e.target.value as Level)}
+            >
+              <option value="solo">Solo freelancer</option>
+              <option value="agent">AI agent</option>
+              <option value="team">Small team</option>
+            </select>
+          </div>
+
+          <div className="form-control">
+            <label className="label">
+              <span className="label-text">Duration (days, optional)</span>
+            </label>
+            <input
+              type="number"
+              min="1"
+              className="input input-bordered input-sm"
+              placeholder="e.g. 14"
+              value={durationDays}
+              onChange={e => setDurationDays(e.target.value)}
+            />
+          </div>
+        </div>
+
         <div className="card-actions mt-4 justify-end">
-          <button
-            className="btn btn-primary"
-            onClick={handleGenerate}
-            disabled={isLoading || !description.trim()}
-          >
-            {isLoading ? (
+          <button className="btn btn-primary" onClick={handleGenerate} disabled={isStreaming || !description.trim()}>
+            {isStreaming ? (
               <>
                 <span className="loading loading-spinner loading-sm" />
                 Generating...
               </>
+            ) : suggestions.length ? (
+              "Regenerate"
             ) : (
-              <>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  strokeWidth={1.5}
-                  stroke="currentColor"
-                  className="h-5 w-5"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09zM18.259 8.715L18 9.75l-.259-1.035a3.375 3.375 0 00-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 002.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 002.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 00-2.456 2.456zM16.894 20.567L16.5 21.75l-.394-1.183a2.25 2.25 0 00-1.423-1.423L13.5 18.75l1.183-.394a2.25 2.25 0 001.423-1.423l.394-1.183.394 1.183a2.25 2.25 0 001.423 1.423l1.183.394-1.183.394a2.25 2.25 0 00-1.423 1.423z"
-                  />
-                </svg>
-                Generate Milestones
-              </>
+              "Generate Milestones"
             )}
           </button>
         </div>
+
+        {error && (
+          <div className="alert alert-error mt-3 text-sm">
+            <span>{error}</span>
+          </div>
+        )}
+
+        {suggestions.length > 0 && (
+          <div className="mt-4 space-y-3">
+            <div className="flex justify-between items-baseline">
+              <h4 className="font-semibold">Suggestions ({suggestions.length})</h4>
+              <span className="text-sm opacity-70">
+                Total: {totalSuggested.toFixed(3)} {currencySymbol}
+              </span>
+            </div>
+            <ul className="space-y-2">
+              {suggestions.map((m, i) => (
+                <li key={i} className="bg-base-100 rounded-md p-3">
+                  <div className="flex justify-between gap-2">
+                    <span className="font-medium">
+                      {i + 1}. {m.description}
+                    </span>
+                    <span className="text-sm whitespace-nowrap">
+                      {m.amount} {currencySymbol}
+                    </span>
+                  </div>
+                  {m.acceptance && <div className="text-xs opacity-70 mt-1">Acceptance: {m.acceptance}</div>}
+                </li>
+              ))}
+            </ul>
+
+            <div className="flex justify-end gap-2">
+              <button className="btn btn-ghost btn-sm" onClick={() => setSuggestions([])}>
+                Clear
+              </button>
+              <button className="btn btn-primary btn-sm" onClick={handleAccept} disabled={isStreaming}>
+                Use these milestones
+              </button>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
