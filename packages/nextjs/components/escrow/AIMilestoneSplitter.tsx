@@ -81,7 +81,7 @@ export const AIMilestoneSplitter = ({ onAccept }: AIMilestoneSplitterProps) => {
         <div className="flex-1">
           <h3 className="font-semibold leading-tight">AI Milestone Splitter</h3>
           <p className="text-xs opacity-60">
-            Kimi proposes a milestone breakdown with acceptance criteria, streamed live.
+            Describe the work and we&apos;ll propose a milestone breakdown with acceptance criteria, streamed live.
           </p>
         </div>
       </div>

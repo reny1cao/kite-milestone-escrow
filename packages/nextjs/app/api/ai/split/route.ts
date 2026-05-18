@@ -102,7 +102,7 @@ export async function POST(req: NextRequest) {
 
   if (!upstream.ok || !upstream.body) {
     const errText = await upstream.text().catch(() => "");
-    return new Response(JSON.stringify({ error: `Kimi error ${upstream.status}: ${errText.slice(0, 300)}` }), {
+    return new Response(JSON.stringify({ error: `AI service error ${upstream.status}: ${errText.slice(0, 300)}` }), {
       status: 502,
       headers: { "Content-Type": "application/json" },
     });
