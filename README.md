@@ -1,4 +1,8 @@
-# Kite Milestone Escrow
+<p align="center">
+  <img src="./assets/kite-logo.svg" alt="Kite" width="96" height="96" />
+</p>
+
+<h1 align="center">Kite Milestone Escrow</h1>
 
 A blockchain dApp for milestone-based project payments with on-chain escrow. Clients fund work upfront, workers get paid only when milestones are approved, and an optional project manager can route assignments and earn a commission.
 
